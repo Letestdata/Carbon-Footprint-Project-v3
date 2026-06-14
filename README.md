@@ -135,6 +135,9 @@ npm run preview
 
 ### Step-by-Step Deployment
 
+To avoid URL collisions on shared GCP projects, make sure to deploy with a unique service name prefix (e.g., `ecotrack-<unique-suffix>`).
+
+#### Option A: Google Cloud Run (Recommended for unique links)
 ```bash
 # 1. Authenticate with Google Cloud
 gcloud auth login
@@ -142,14 +145,22 @@ gcloud auth login
 # 2. Set your GCP project
 gcloud config set project YOUR_PROJECT_ID
 
-# 3. Build the React app
+# 3. Build and deploy to Cloud Run using a unique lowercase name
+gcloud run deploy ecotrack-unique-suffix \
+  --source . \
+  --port 8080 \
+  --allow-unauthenticated \
+  --region=us-central1
+```
+
+#### Option B: Google App Engine
+Add `service: ecotrack-unique-suffix` at the top of your `app.yaml` file, then deploy:
+```bash
+# 1. Build the React app
 npm run build
 
-# 4. Deploy to App Engine
+# 2. Deploy to App Engine
 gcloud app deploy app.yaml --quiet
-
-# 5. Open the deployed app
-gcloud app browse
 ```
 
 ### App Engine Configuration (`app.yaml`)
