@@ -6,13 +6,7 @@
 .git
 .gitignore
 node_modules/
-src/
-public/
-*.md
-*.yaml.example
-.env*
-.eslintrc*
-.prettierrc*
-tsconfig*.json
-vite.config.*
+dist/
 coverage/
+npm-debug.log
+
