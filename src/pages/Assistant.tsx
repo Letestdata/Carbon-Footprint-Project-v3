@@ -73,18 +73,18 @@ function MessageBubble({ msg }: MessageBubbleProps) {
           className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
             isUser
               ? "bg-green-600 text-white rounded-tr-sm"
-              : "bg-white border border-gray-100 text-gray-800 rounded-tl-sm shadow-sm"
+              : "bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 text-gray-800 dark:text-slate-200 rounded-tl-sm shadow-sm"
           }`}
         >
           {formatContent(msg.content)}
         </div>
-        <span className="text-xs text-gray-400 px-1">{time}</span>
+        <span className="text-xs text-gray-400 dark:text-slate-500 px-1">{time}</span>
       </div>
 
       {/* User avatar */}
       {isUser && (
         <div
-          className="w-8 h-8 rounded-xl bg-gray-200 flex items-center justify-center text-sm shrink-0 mt-1"
+          className="w-8 h-8 rounded-xl bg-gray-200 dark:bg-slate-800 flex items-center justify-center text-sm shrink-0 mt-1"
           aria-hidden="true"
         >
           👤
@@ -166,8 +166,8 @@ export function Assistant() {
             🤖
           </div>
           <div>
-            <h1 className="text-base font-bold text-gray-900">EcoBot</h1>
-            <p className="text-xs text-green-600 font-medium flex items-center gap-1">
+            <h1 className="text-base font-bold text-gray-900 dark:text-white">EcoBot</h1>
+            <p className="text-xs text-green-600 dark:text-green-400 font-medium flex items-center gap-1">
               <span
                 className="w-2 h-2 bg-green-500 rounded-full animate-pulse"
                 aria-hidden="true"
@@ -203,10 +203,10 @@ export function Assistant() {
               🌍
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-800">
+              <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
                 Hi! I'm EcoBot 👋
               </h2>
-              <p className="text-sm text-gray-500 mt-1 max-w-xs mx-auto">
+              <p className="text-sm text-gray-500 dark:text-slate-400 mt-1 max-w-xs mx-auto">
                 Your AI-powered carbon footprint assistant. Ask me anything
                 about reducing your environmental impact!
               </p>
@@ -223,7 +223,7 @@ export function Assistant() {
                   key={prompt}
                   onClick={() => sendMessage(prompt)}
                   aria-label={`Ask: ${prompt}`}
-                  className="text-left text-xs bg-white border border-gray-200 rounded-xl px-3 py-2.5 hover:border-green-400 hover:bg-green-50 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 text-gray-700 font-medium"
+                  className="text-left text-xs bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl px-3 py-2.5 hover:border-green-400 hover:bg-green-50 dark:hover:bg-green-950/20 dark:hover:border-green-500 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 text-gray-700 dark:text-slate-300 font-medium"
                 >
                   {prompt}
                 </button>
@@ -252,11 +252,11 @@ export function Assistant() {
             >
               🤖
             </div>
-            <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm flex gap-1 items-center">
+            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm flex gap-1 items-center">
               {[0, 1, 2].map((i) => (
                 <span
                   key={i}
-                  className="w-2 h-2 bg-green-400 rounded-full animate-bounce"
+                  className="w-2 h-2 bg-green-400 dark:bg-green-500 rounded-full animate-bounce"
                   style={{ animationDelay: `${i * 150}ms` }}
                   aria-hidden="true"
                 />
@@ -283,7 +283,7 @@ export function Assistant() {
                 onClick={() => sendMessage(p)}
                 disabled={isTyping}
                 aria-label={`Quick reply: ${p}`}
-                className="shrink-0 text-xs bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full hover:bg-green-100 hover:text-green-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 disabled:opacity-50"
+                className="shrink-0 text-xs bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-slate-300 px-3 py-1.5 rounded-full hover:bg-green-100 dark:hover:bg-green-950/40 hover:text-green-700 dark:hover:text-green-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 disabled:opacity-50"
               >
                 {p}
               </button>
@@ -310,7 +310,7 @@ export function Assistant() {
             disabled={isTyping}
             aria-describedby="input-hint"
             maxLength={500}
-            className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:opacity-50 disabled:bg-gray-50"
+            className="flex-1 px-4 py-3 rounded-2xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent disabled:opacity-50 disabled:bg-gray-50 dark:disabled:bg-slate-950"
           />
           <Button
             type="submit"

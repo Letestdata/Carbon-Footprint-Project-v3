@@ -90,8 +90,8 @@ export function Tips() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-gray-900">Eco Tips</h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">Eco Tips</h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
           Personalised actions to reduce your carbon footprint
         </p>
       </div>
@@ -118,15 +118,15 @@ export function Tips() {
 
       {/* ── Personalised banner ─── */}
       {topCategory && categoryBreakdown[topCategory] > 0 && (
-        <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 flex items-start gap-3">
+        <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/30 rounded-2xl p-4 flex items-start gap-3">
           <span className="text-2xl mt-0.5" aria-hidden="true">
             💡
           </span>
           <div>
-            <p className="text-sm font-semibold text-amber-800">
+            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">
               Your biggest source: {CATEGORY_LABELS[topCategory]}
             </p>
-            <p className="text-xs text-amber-700 mt-0.5">
+            <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
               {categoryBreakdown[topCategory].toFixed(1)} kg CO₂e this month.
               Tips for this category are highlighted first.
             </p>
@@ -142,7 +142,7 @@ export function Tips() {
         <div className="space-y-3">
           {/* Category filter */}
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">
+            <p className="text-xs font-medium text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wide">
               Category
             </p>
             <div
@@ -158,8 +158,8 @@ export function Tips() {
                   aria-label={`Filter by ${cat === "all" ? "all categories" : CATEGORY_LABELS[cat]}`}
                   className={`px-3 py-1.5 rounded-xl text-sm font-medium border transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
                     activeFilter === cat
-                      ? "bg-green-600 text-white border-green-600"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+                      ? "bg-green-600 text-white border-green-600 dark:bg-green-600 dark:border-green-600"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:border-slate-700"
                   }`}
                 >
                   {cat === "all"
@@ -172,7 +172,7 @@ export function Tips() {
 
           {/* Difficulty filter */}
           <div>
-            <p className="text-xs font-medium text-gray-500 mb-2 uppercase tracking-wide">
+            <p className="text-xs font-medium text-gray-500 dark:text-slate-400 mb-2 uppercase tracking-wide">
               Difficulty
             </p>
             <div
@@ -188,8 +188,8 @@ export function Tips() {
                   aria-label={`Filter by ${d} difficulty`}
                   className={`px-3 py-1.5 rounded-xl text-sm font-medium border transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 capitalize ${
                     difficultyFilter === d
-                      ? "bg-gray-800 text-white border-gray-800"
-                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+                      ? "bg-gray-800 text-white border-gray-800 dark:bg-slate-200 dark:text-slate-900 dark:border-slate-200"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-gray-300 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:border-slate-700"
                   }`}
                 >
                   {d === "all" ? "All levels" : d}
@@ -201,7 +201,7 @@ export function Tips() {
       </section>
 
       {/* ── Tip count ─── */}
-      <p className="text-sm text-gray-500" aria-live="polite">
+      <p className="text-sm text-gray-500 dark:text-slate-400" aria-live="polite">
         Showing {filteredTips.length} tip{filteredTips.length !== 1 ? "s" : ""}
       </p>
 
@@ -217,7 +217,7 @@ export function Tips() {
             return (
               <li key={tip.id}>
                 <Card
-                  className={`transition-all duration-200 ${isTopCat ? "border-amber-200 bg-amber-50/40" : ""}`}
+                  className={`transition-all duration-200 ${isTopCat ? "border-amber-200 bg-amber-50/40 dark:border-amber-900/50 dark:bg-amber-950/10" : ""}`}
                   role="article"
                   aria-label={`Tip: ${tip.title}`}
                 >
@@ -230,7 +230,7 @@ export function Tips() {
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 flex-wrap">
-                        <h3 className="text-sm font-semibold text-gray-900">
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
                           {tip.title}
                         </h3>
                         <div className="flex items-center gap-1.5 flex-wrap">
@@ -246,12 +246,12 @@ export function Tips() {
                         </div>
                       </div>
 
-                      <p className="text-sm text-gray-600 mt-1.5 leading-relaxed">
+                      <p className="text-sm text-gray-600 dark:text-slate-300 mt-1.5 leading-relaxed">
                         {tip.description}
                       </p>
 
                       <div className="mt-3 flex items-center justify-between flex-wrap gap-2">
-                        <span className="text-xs text-green-700 font-medium bg-green-50 px-2.5 py-1 rounded-full">
+                        <span className="text-xs text-green-700 dark:text-green-300 font-medium bg-green-50 dark:bg-green-950/20 px-2.5 py-1 rounded-full">
                           💚 Saves ~{tip.potentialSaving} kg CO₂e/month
                         </span>
                         <button
@@ -265,7 +265,7 @@ export function Tips() {
                           className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 ${
                             isSaved
                               ? "bg-green-600 text-white"
-                              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                              : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
                           }`}
                         >
                           {isSaved ? "✓ Saved" : "+ Save"}
@@ -280,7 +280,7 @@ export function Tips() {
         </ul>
 
         {filteredTips.length === 0 && (
-          <div className="text-center py-10 text-gray-400">
+          <div className="text-center py-10 text-gray-400 dark:text-slate-500">
             <div className="text-4xl mb-2" aria-hidden="true">
               🔍
             </div>

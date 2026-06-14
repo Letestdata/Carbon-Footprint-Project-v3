@@ -93,17 +93,17 @@ export function Profile() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Profile</h1>
+      <h1 className="text-xl font-bold text-gray-900 dark:text-white">Profile</h1>
 
       {/* ── Save confirmation ─── */}
       {saved && (
         <div
           role="alert"
           aria-live="polite"
-          className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3"
+          className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 rounded-xl p-4 flex items-center gap-3"
         >
           <span aria-hidden="true">✅</span>
-          <p className="text-green-800 text-sm font-medium">
+          <p className="text-green-800 dark:text-green-300 text-sm font-medium">
             Profile saved successfully!
           </p>
         </div>
@@ -135,7 +135,7 @@ export function Profile() {
               <div>
                 <label
                   htmlFor={nameId}
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
                 >
                   Name{" "}
                   <span aria-hidden="true" className="text-red-500">
@@ -150,14 +150,14 @@ export function Profile() {
                   required
                   aria-required="true"
                   maxLength={60}
-                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor={locationId}
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
                 >
                   Location
                 </label>
@@ -168,14 +168,14 @@ export function Profile() {
                   onChange={(e) => setLocation(e.target.value)}
                   maxLength={80}
                   placeholder="e.g. London, UK"
-                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor={householdId}
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
                 >
                   Household Size{" "}
                   <span aria-hidden="true" className="text-red-500">
@@ -191,14 +191,14 @@ export function Profile() {
                   onChange={(e) => setHouseholdSize(e.target.value)}
                   required
                   aria-required="true"
-                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
 
               <div>
                 <label
                   htmlFor={goalId}
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
                 >
                   Monthly CO₂e Goal (kg){" "}
                   <span aria-hidden="true" className="text-red-500">
@@ -214,15 +214,15 @@ export function Profile() {
                   onChange={(e) => setMonthlyGoal(e.target.value)}
                   required
                   aria-required="true"
-                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
                   Paris target: 167 kg/month | Global avg: 417 kg/month
                 </p>
               </div>
 
               {formError && (
-                <p role="alert" className="text-sm text-red-600">
+                <p role="alert" className="text-sm text-red-600 dark:text-red-400">
                   {formError}
                 </p>
               )}
@@ -270,14 +270,14 @@ export function Profile() {
               ].map(({ label, value, icon }) => (
                 <li
                   key={label}
-                  className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0"
+                  className="flex items-center gap-3 py-2 border-b border-gray-50 dark:border-slate-850 last:border-0"
                 >
                   <span className="text-lg w-7" aria-hidden="true">
                     {icon}
                   </span>
                   <div>
-                    <p className="text-xs text-gray-500 font-medium">{label}</p>
-                    <p className="text-sm font-medium text-gray-800">{value}</p>
+                    <p className="text-xs text-gray-500 dark:text-slate-400 font-medium">{label}</p>
+                    <p className="text-sm font-medium text-gray-800 dark:text-slate-200">{value}</p>
                   </div>
                 </li>
               ))}
@@ -306,7 +306,7 @@ export function Profile() {
               >
                 {rating.label}
               </Badge>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-gray-600 dark:text-slate-400 mt-1">
                 {totalMonthCo2e.toFixed(1)} kg CO₂e this month
               </p>
             </div>
@@ -328,9 +328,9 @@ export function Profile() {
               { label: "Activities", value: totalEntries },
               { label: "Total CO₂e (kg)", value: totalCo2eLogged.toFixed(1) },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-gray-50 rounded-xl p-3">
-                <dd className="text-xl font-bold text-gray-900">{value}</dd>
-                <dt className="text-xs text-gray-500 mt-0.5">{label}</dt>
+              <div key={label} className="bg-gray-50 dark:bg-slate-900 dark:border dark:border-slate-800/80 rounded-xl p-3">
+                <dd className="text-xl font-bold text-gray-900 dark:text-white">{value}</dd>
+                <dt className="text-xs text-gray-500 dark:text-slate-400 mt-0.5">{label}</dt>
               </div>
             ))}
           </dl>
@@ -354,8 +354,8 @@ export function Profile() {
                   key={a.id}
                   className={`rounded-xl p-3 flex items-start gap-2.5 transition-all ${
                     earned
-                      ? "bg-amber-50 border border-amber-100"
-                      : "bg-gray-50 opacity-60"
+                      ? "bg-amber-50 border border-amber-100 dark:bg-amber-950/10 dark:border-amber-900/30"
+                      : "bg-gray-50 opacity-60 dark:bg-slate-900/40 dark:border dark:border-slate-900/60"
                   }`}
                   aria-label={
                     earned ? `Earned: ${a.title}` : `Locked: ${a.title}`
@@ -368,14 +368,14 @@ export function Profile() {
                     {a.icon}
                   </span>
                   <div>
-                    <p className="text-xs font-semibold text-gray-800">
+                    <p className="text-xs font-semibold text-gray-800 dark:text-slate-200">
                       {a.title}
                     </p>
-                    <p className="text-xs text-gray-500 mt-0.5 leading-tight">
+                    <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5 leading-tight">
                       {a.description}
                     </p>
                     {earned && (
-                      <span className="text-xs text-amber-600 font-medium">
+                      <span className="text-xs text-amber-600 dark:text-amber-500 font-medium">
                         ✓ Earned
                       </span>
                     )}
@@ -392,7 +392,7 @@ export function Profile() {
         <Card>
           <CardHeader titleId="data-heading" title="Data & Privacy" icon="🔒" />
           <div className="space-y-3">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-slate-400">
               All your data is stored locally on your device. We do not collect
               or transmit any personal data to external servers.
             </p>

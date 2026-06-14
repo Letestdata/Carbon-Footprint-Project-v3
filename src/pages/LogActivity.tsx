@@ -46,7 +46,7 @@ function RecentEntryItem({ entry, onDelete }: RecentEntryProps) {
     (f) => f.subcategory === entry.subcategory,
   );
   return (
-    <li className="flex items-center justify-between gap-3 py-3 border-b border-gray-50 last:border-0">
+    <li className="flex items-center justify-between gap-3 py-3 border-b border-gray-50 dark:border-slate-800 last:border-0">
       <div className="flex items-center gap-3 min-w-0">
         <span
           className="w-8 h-8 rounded-lg flex items-center justify-center text-base shrink-0"
@@ -56,16 +56,16 @@ function RecentEntryItem({ entry, onDelete }: RecentEntryProps) {
           {CATEGORY_ICONS[entry.category]}
         </span>
         <div className="min-w-0">
-          <p className="text-sm font-medium text-gray-800 truncate">
+          <p className="text-sm font-medium text-gray-800 dark:text-slate-200 truncate">
             {factor?.label ?? entry.subcategory}
           </p>
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-500 dark:text-slate-400">
             {entry.value} {entry.unit} · {entry.date}
           </p>
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0">
-        <span className="text-sm font-semibold text-gray-700">
+        <span className="text-sm font-semibold text-gray-700 dark:text-slate-300">
           {entry.co2e.toFixed(2)} kg
         </span>
         <button
@@ -167,19 +167,19 @@ export function LogActivity() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Log Activity</h1>
+      <h1 className="text-xl font-bold text-gray-900 dark:text-white">Log Activity</h1>
 
       {/* ── Success toast ─── */}
       {submitted && (
         <div
           role="alert"
           aria-live="polite"
-          className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3"
+          className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900/50 rounded-xl p-4 flex items-center gap-3"
         >
-          <span className="text-green-600 text-xl" aria-hidden="true">
+          <span className="text-green-600 dark:text-green-400 text-xl" aria-hidden="true">
             ✅
           </span>
-          <p className="text-green-800 text-sm font-medium">
+          <p className="text-green-800 dark:text-green-300 text-sm font-medium">
             Activity logged! Your carbon data has been updated.
           </p>
         </div>
@@ -198,7 +198,7 @@ export function LogActivity() {
           <form onSubmit={handleSubmit} noValidate className="space-y-5">
             {/* Category selector */}
             <fieldset>
-              <legend className="text-sm font-medium text-gray-700 mb-2">
+              <legend className="text-sm font-medium text-gray-700 dark:text-slate-350 mb-2">
                 Category{" "}
                 <span aria-hidden="true" className="text-red-500">
                   *
@@ -218,8 +218,8 @@ export function LogActivity() {
                     aria-label={`Select ${CATEGORY_LABELS[cat]} category`}
                     className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium border-2 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-1 ${
                       selectedCategory === cat
-                        ? "border-green-500 bg-green-50 text-green-700"
-                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                        ? "border-green-500 bg-green-50 text-green-700 dark:border-green-500 dark:bg-green-950/20 dark:text-green-400"
+                        : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-700"
                     }`}
                   >
                     <span aria-hidden="true">{CATEGORY_ICONS[cat]}</span>
@@ -233,7 +233,7 @@ export function LogActivity() {
             <div>
               <label
                 htmlFor={factorId}
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
               >
                 Activity Type{" "}
                 <span aria-hidden="true" className="text-red-500">
@@ -250,7 +250,7 @@ export function LogActivity() {
                 required
                 aria-required="true"
                 aria-describedby={error ? `${factorId}-error` : undefined}
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               >
                 <option value="">— Select activity —</option>
                 {factorsForCategory.map((f) => (
@@ -265,11 +265,11 @@ export function LogActivity() {
             <div>
               <label
                 htmlFor={valueId}
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
               >
                 Amount
                 {selectedFactorData && (
-                  <span className="text-gray-400 font-normal ml-1">
+                  <span className="text-gray-400 dark:text-slate-500 font-normal ml-1">
                     ({selectedFactorData.unit})
                   </span>
                 )}
@@ -291,7 +291,7 @@ export function LogActivity() {
                 required
                 aria-required="true"
                 aria-describedby={error ? `${factorId}-error` : undefined}
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
 
@@ -299,7 +299,7 @@ export function LogActivity() {
             <div>
               <label
                 htmlFor={dateId}
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
               >
                 Date{" "}
                 <span aria-hidden="true" className="text-red-500">
@@ -315,7 +315,7 @@ export function LogActivity() {
                 required
                 aria-required="true"
                 aria-describedby={error ? `${factorId}-error` : undefined}
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
 
@@ -323,10 +323,10 @@ export function LogActivity() {
             <div>
               <label
                 htmlFor={noteId}
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-slate-300 mb-1"
               >
                 Note{" "}
-                <span className="text-gray-400 font-normal">(optional)</span>
+                <span className="text-gray-400 dark:text-slate-500 font-normal">(optional)</span>
               </label>
               <input
                 id={noteId}
@@ -335,14 +335,14 @@ export function LogActivity() {
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="e.g. commute to work"
                 maxLength={120}
-                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
 
             {/* CO2 preview */}
             {estimatedCo2e > 0 && (
               <div
-                className="bg-green-50 border border-green-100 rounded-xl p-4 flex items-center gap-3"
+                className="bg-green-50 dark:bg-green-950/20 border border-green-100 dark:border-green-900/30 rounded-xl p-4 flex items-center gap-3"
                 aria-live="polite"
                 aria-label={`Estimated CO2 emission: ${estimatedCo2e.toFixed(3)} kg`}
               >
@@ -350,10 +350,10 @@ export function LogActivity() {
                   🌿
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-green-800">
+                  <p className="text-sm font-semibold text-green-800 dark:text-green-300">
                     Estimated: {estimatedCo2e.toFixed(3)} kg CO₂e
                   </p>
-                  <p className="text-xs text-green-600">
+                  <p className="text-xs text-green-600 dark:text-green-400">
                     = {((estimatedCo2e * 1000) / 192).toFixed(1)} km driven in a
                     petrol car
                   </p>
@@ -366,7 +366,7 @@ export function LogActivity() {
               <p
                 id={`${factorId}-error`}
                 role="alert"
-                className="text-sm text-red-600"
+                className="text-sm text-red-600 dark:text-red-400"
               >
                 {error}
               </p>
@@ -394,12 +394,12 @@ export function LogActivity() {
             subtitle={`${recentEntries.length} activities logged`}
           />
           {recentEntries.length === 0 ? (
-            <p className="text-center text-gray-400 text-sm py-6">
+            <p className="text-center text-gray-400 dark:text-slate-500 text-sm py-6">
               No activities yet. Log your first one above!
             </p>
           ) : (
             <ul
-              className="divide-y divide-gray-50"
+              className="divide-y divide-gray-50 dark:divide-slate-800"
               role="list"
               aria-label="Recent activity log"
             >

@@ -37,8 +37,9 @@ const BENCHMARKS = [
 // ── Main component ────────────────────────────────────────────
 
 export function Insights() {
-  const { state, totalMonthCo2e, categoryBreakdown } = useApp();
+  const { state, totalMonthCo2e, categoryBreakdown, theme } = useApp();
   const { logs } = state;
+  const isDark = theme === "dark";
 
   // Monthly totals (last 6 months)
   const monthlyData = useMemo(() => {
@@ -136,7 +137,7 @@ export function Insights() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-bold text-gray-900">Insights</h1>
+      <h1 className="text-xl font-bold text-gray-900 dark:text-white">Insights</h1>
 
       {/* ── Summary stats ─── */}
       <section aria-labelledby="summary-heading">
@@ -174,12 +175,12 @@ export function Insights() {
               bg: "bg-purple-50",
             },
           ].map((s) => (
-            <div key={s.label} className={`${s.bg} rounded-2xl p-4`}>
+            <div key={s.label} className={`${s.bg} dark:bg-slate-900/50 dark:border dark:border-slate-800/80 rounded-2xl p-4 transition-colors`}>
               <span className="text-2xl" aria-hidden="true">
                 {s.icon}
               </span>
-              <p className="text-xl font-bold text-gray-900 mt-1">{s.value}</p>
-              <p className="text-xs text-gray-500">{s.label}</p>
+              <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">{s.value}</p>
+              <p className="text-xs text-gray-500 dark:text-slate-400">{s.label}</p>
             </div>
           ))}
         </div>
@@ -203,12 +204,18 @@ export function Insights() {
                 data={benchmarkData}
                 margin={{ top: 5, right: 5, left: -10, bottom: 5 }}
               >
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} unit=" kg" />
+                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#334155" : "#f0f0f0"} />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: isDark ? "#94a3b8" : "#4b5563" }} />
+                <YAxis tick={{ fontSize: 11, fill: isDark ? "#94a3b8" : "#4b5563" }} unit=" kg" />
                 <Tooltip
                   formatter={(v) => [`${Number(v).toFixed(1)} kg CO₂e`]}
-                  contentStyle={{ borderRadius: 12, fontSize: 12 }}
+                  contentStyle={{
+                    borderRadius: 12,
+                    fontSize: 12,
+                    backgroundColor: isDark ? "#1e293b" : "#fff",
+                    borderColor: isDark ? "#334155" : "#e2e8f0",
+                    color: isDark ? "#f8fafc" : "#0f172a"
+                  }}
                 />
                 {BENCHMARKS.map((b) => (
                   <Bar
@@ -218,7 +225,7 @@ export function Insights() {
                     radius={[6, 6, 0, 0]}
                   />
                 ))}
-                <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
+                <Legend iconType="circle" wrapperStyle={{ fontSize: 12, color: isDark ? "#94a3b8" : "#4b5563" }} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -243,7 +250,7 @@ export function Insights() {
                   key={label}
                   className="flex items-center justify-between text-sm"
                 >
-                  <span className="flex items-center gap-2 text-gray-600">
+                  <span className="flex items-center gap-2 text-gray-600 dark:text-slate-350">
                     <span
                       className="w-3 h-3 rounded-full inline-block"
                       style={{ backgroundColor: color }}
@@ -254,8 +261,8 @@ export function Insights() {
                   <span
                     className={
                       diff <= 0
-                        ? "text-green-600 font-medium"
-                        : "text-red-500 font-medium"
+                        ? "text-green-600 dark:text-green-400 font-medium"
+                        : "text-red-500 dark:text-red-400 font-medium"
                     }
                   >
                     {diff <= 0
@@ -288,15 +295,21 @@ export function Insights() {
                   data={monthlyData}
                   margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} />
-                  <YAxis tick={{ fontSize: 11 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#334155" : "#f0f0f0"} />
+                  <XAxis dataKey="month" tick={{ fontSize: 11, fill: isDark ? "#94a3b8" : "#4b5563" }} />
+                  <YAxis tick={{ fontSize: 11, fill: isDark ? "#94a3b8" : "#4b5563" }} />
                   <Tooltip
                     formatter={(v) => [
                       `${Number(v).toFixed(2)} kg CO₂e`,
                       "Emissions",
                     ]}
-                    contentStyle={{ borderRadius: 12, fontSize: 12 }}
+                    contentStyle={{
+                      borderRadius: 12,
+                      fontSize: 12,
+                      backgroundColor: isDark ? "#1e293b" : "#fff",
+                      borderColor: isDark ? "#334155" : "#e2e8f0",
+                      color: isDark ? "#f8fafc" : "#0f172a"
+                    }}
                   />
                   <Bar
                     dataKey="total"
@@ -346,7 +359,13 @@ export function Insights() {
                   </Pie>
                   <Tooltip
                     formatter={(v) => [`${Number(v).toFixed(2)} kg CO₂e`]}
-                    contentStyle={{ borderRadius: 12, fontSize: 12 }}
+                    contentStyle={{
+                      borderRadius: 12,
+                      fontSize: 12,
+                      backgroundColor: isDark ? "#1e293b" : "#fff",
+                      borderColor: isDark ? "#334155" : "#e2e8f0",
+                      color: isDark ? "#f8fafc" : "#0f172a"
+                    }}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -357,7 +376,7 @@ export function Insights() {
               {pieData.map((d) => (
                 <li
                   key={d.name}
-                  className="flex items-center gap-2 text-sm text-gray-600"
+                  className="flex items-center gap-2 text-sm text-gray-600 dark:text-slate-350"
                 >
                   <span
                     className="w-3 h-3 rounded-full shrink-0"
@@ -392,21 +411,21 @@ export function Insights() {
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      className="text-lg font-bold text-gray-300 w-5"
+                      className="text-lg font-bold text-gray-300 dark:text-slate-700 w-5"
                       aria-hidden="true"
                     >
                       {i + 1}
                     </span>
                     <div>
-                      <p className="text-sm font-medium text-gray-800 capitalize">
+                      <p className="text-sm font-medium text-gray-800 dark:text-slate-200 capitalize">
                         {act.label.replace(/_/g, " ")}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-slate-400">
                         {CATEGORY_LABELS[act.category]}
                       </p>
                     </div>
                   </div>
-                  <span className="text-sm font-semibold text-gray-700">
+                  <span className="text-sm font-semibold text-gray-700 dark:text-slate-300">
                     {act.co2e.toFixed(2)} kg
                   </span>
                 </li>
@@ -418,11 +437,11 @@ export function Insights() {
 
       {/* ── Empty state ─── */}
       {logs.length === 0 && (
-        <div className="text-center py-12 text-gray-400">
+        <div className="text-center py-12 text-gray-400 dark:text-slate-500">
           <div className="text-5xl mb-3" aria-hidden="true">
             📊
           </div>
-          <p className="font-medium text-gray-600">No data yet</p>
+          <p className="font-medium text-gray-600 dark:text-slate-300">No data yet</p>
           <p className="text-sm mt-1">
             Log activities to see your insights here.
           </p>
