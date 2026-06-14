@@ -3,9 +3,9 @@
 // Pure functions for testability
 // ============================================================
 
-import { EMISSION_FACTORS } from '../data/emissionFactors';
-import type { ActivityEntry, DailyLog, Category } from '../types';
-import { round } from './formatters';
+import { EMISSION_FACTORS } from "../data/emissionFactors";
+import type { ActivityEntry, DailyLog, Category } from "../types";
+import { round } from "./formatters";
 
 /**
  * Calculates CO₂e for a given activity.
@@ -23,7 +23,10 @@ export function calculateCo2e(subcategory: string, quantity: number): number {
  * Sums total CO₂e from an array of activity entries.
  */
 export function sumEntriesCo2e(entries: ActivityEntry[]): number {
-  return round(entries.reduce((sum, e) => sum + e.co2e, 0), 4);
+  return round(
+    entries.reduce((sum, e) => sum + e.co2e, 0),
+    4,
+  );
 }
 
 /**
@@ -34,7 +37,7 @@ export function getMonthTotal(logs: DailyLog[], yearMonth: string): number {
     logs
       .filter((l) => l.date.startsWith(yearMonth))
       .reduce((s, l) => s + l.totalCo2e, 0),
-    2
+    2,
   );
 }
 
@@ -43,7 +46,7 @@ export function getMonthTotal(logs: DailyLog[], yearMonth: string): number {
  */
 export function getCategoryBreakdown(
   logs: DailyLog[],
-  yearMonth: string
+  yearMonth: string,
 ): Record<Category, number> {
   const base: Record<Category, number> = {
     transport: 0,
@@ -57,7 +60,7 @@ export function getCategoryBreakdown(
     .forEach((l) =>
       l.entries.forEach((e) => {
         base[e.category] = round(base[e.category] + e.co2e, 2);
-      })
+      }),
     );
   return base;
 }
@@ -85,7 +88,7 @@ export function calculateStreak(logs: DailyLog[]): number {
   prev.setHours(0, 0, 0, 0);
 
   for (const log of sorted) {
-    const d = new Date(log.date + 'T00:00:00');
+    const d = new Date(log.date + "T00:00:00");
     d.setHours(0, 0, 0, 0);
     const diff = (prev.getTime() - d.getTime()) / 86400000;
     if (diff <= 1) {
@@ -102,10 +105,13 @@ export function calculateStreak(logs: DailyLog[]): number {
 /**
  * Compares two monthly totals and returns trend direction.
  */
-export function getTrend(current: number, previous: number): 'up' | 'down' | 'stable' {
-  if (previous === 0) return 'stable';
+export function getTrend(
+  current: number,
+  previous: number,
+): "up" | "down" | "stable" {
+  if (previous === 0) return "stable";
   const change = ((current - previous) / previous) * 100;
-  if (change > 5) return 'up';
-  if (change < -5) return 'down';
-  return 'stable';
+  if (change > 5) return "up";
+  if (change < -5) return "down";
+  return "stable";
 }

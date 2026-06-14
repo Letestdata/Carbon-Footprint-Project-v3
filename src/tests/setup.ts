@@ -1,5 +1,5 @@
-import { afterEach, vi } from 'vitest';
-import { cleanup } from '@testing-library/react';
+import { afterEach, vi } from "vitest";
+import { cleanup } from "@testing-library/react";
 
 // Clean up DOM after each test
 afterEach(() => {
@@ -23,7 +23,7 @@ const localStorageMock = (() => {
   };
 })();
 
-Object.defineProperty(window, 'localStorage', {
+Object.defineProperty(window, "localStorage", {
   value: localStorageMock,
 });
 
@@ -35,8 +35,8 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 }));
 
 // Mock Recharts ResponsiveContainer to render children directly
-vi.mock('recharts', async () => {
-  const original = await vi.importActual<any>('recharts');
+vi.mock("recharts", async () => {
+  const original = await vi.importActual<any>("recharts");
   return {
     ...original,
     ResponsiveContainer: ({ children }: any) => children,
@@ -46,7 +46,7 @@ vi.mock('recharts', async () => {
     Tooltip: ({ formatter }: any) => {
       if (formatter) {
         try {
-          formatter(10, 'name', { payload: {} }, 0);
+          formatter(10, "name", { payload: {} }, 0);
         } catch (e) {
           // ignore potential errors in formatter runs
         }
@@ -56,8 +56,8 @@ vi.mock('recharts', async () => {
     Pie: ({ label, data }: any) => {
       if (label && data && data.length > 0) {
         try {
-          label({ name: 'Food', percent: 0.5 });
-          label({ name: 'Food', percent: undefined });
+          label({ name: "Food", percent: 0.5 });
+          label({ name: "Food", percent: undefined });
         } catch (e) {
           // ignore potential errors
         }
@@ -72,4 +72,3 @@ window.confirm = vi.fn(() => true);
 
 // Mock Element.prototype.scrollIntoView
 Element.prototype.scrollIntoView = vi.fn();
-

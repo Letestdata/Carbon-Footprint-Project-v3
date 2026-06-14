@@ -2,27 +2,27 @@
 // EcoTrack – AI Assistant Page (EcoBot)
 // ============================================================
 
-import { useState, useRef, useEffect, useId } from 'react';
-import { useApp } from '../context/AppContext';
-import { Button } from '../components/ui/Button';
-import { generateAssistantResponse } from '../services/assistant';
-import type { ChatMessage } from '../types';
+import { useState, useRef, useEffect, useId } from "react";
+import { useApp } from "../context/AppContext";
+import { Button } from "../components/ui/Button";
+import { generateAssistantResponse } from "../services/assistant";
+import type { ChatMessage } from "../types";
 
 // Quick-start prompts
 const STARTER_PROMPTS = [
-  'What\'s my carbon footprint?',
-  'Give me a daily eco tip',
-  'Compare me to global average',
-  'How do I reach the Paris target?',
-  'Transport tips',
-  'Food tips',
-  'Monthly summary',
-  'What are my achievements?',
+  "What's my carbon footprint?",
+  "Give me a daily eco tip",
+  "Compare me to global average",
+  "How do I reach the Paris target?",
+  "Transport tips",
+  "Food tips",
+  "Monthly summary",
+  "What are my achievements?",
 ];
 
 function formatContent(text: string): React.ReactNode {
   // Parse bold (**text**) and line breaks
-  const lines = text.split('\n');
+  const lines = text.split("\n");
   return (
     <>
       {lines.map((line, li) => {
@@ -30,7 +30,7 @@ function formatContent(text: string): React.ReactNode {
         return (
           <span key={li}>
             {parts.map((part, pi) => {
-              if (part.startsWith('**') && part.endsWith('**')) {
+              if (part.startsWith("**") && part.endsWith("**")) {
                 return <strong key={pi}>{part.slice(2, -2)}</strong>;
               }
               return <span key={pi}>{part}</span>;
@@ -48,16 +48,14 @@ interface MessageBubbleProps {
 }
 
 function MessageBubble({ msg }: MessageBubbleProps) {
-  const isUser = msg.role === 'user';
-  const time = new Date(msg.timestamp).toLocaleTimeString('en', {
-    hour: '2-digit',
-    minute: '2-digit',
+  const isUser = msg.role === "user";
+  const time = new Date(msg.timestamp).toLocaleTimeString("en", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
 
   return (
-    <li
-      className={`flex ${isUser ? 'justify-end' : 'justify-start'} gap-2`}
-    >
+    <li className={`flex ${isUser ? "justify-end" : "justify-start"} gap-2`}>
       {/* Avatar */}
       {!isUser && (
         <div
@@ -68,12 +66,14 @@ function MessageBubble({ msg }: MessageBubbleProps) {
         </div>
       )}
 
-      <div className={`max-w-[85%] ${isUser ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+      <div
+        className={`max-w-[85%] ${isUser ? "items-end" : "items-start"} flex flex-col gap-1`}
+      >
         <div
           className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
             isUser
-              ? 'bg-green-600 text-white rounded-tr-sm'
-              : 'bg-white border border-gray-100 text-gray-800 rounded-tl-sm shadow-sm'
+              ? "bg-green-600 text-white rounded-tr-sm"
+              : "bg-white border border-gray-100 text-gray-800 rounded-tl-sm shadow-sm"
           }`}
         >
           {formatContent(msg.content)}
@@ -97,7 +97,7 @@ function MessageBubble({ msg }: MessageBubbleProps) {
 export function Assistant() {
   const { state, addChatMessage, clearChat } = useApp();
   const { chatHistory, logs, profile, earnedAchievements } = state;
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -105,7 +105,7 @@ export function Assistant() {
 
   // Auto-scroll to bottom on new messages
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory, isTyping]);
 
   function generateId(): string {
@@ -118,18 +118,23 @@ export function Assistant() {
 
     const userMsg: ChatMessage = {
       id: generateId(),
-      role: 'user',
+      role: "user",
       content: trimmed,
       timestamp: new Date().toISOString(),
     };
     addChatMessage(userMsg);
-    setInput('');
+    setInput("");
     setIsTyping(true);
 
     // Simulate processing delay for realistic UX
     await new Promise((r) => setTimeout(r, 600 + Math.random() * 400));
 
-    const response = generateAssistantResponse(trimmed, logs, profile, earnedAchievements);
+    const response = generateAssistantResponse(
+      trimmed,
+      logs,
+      profile,
+      earnedAchievements,
+    );
     addChatMessage(response);
     setIsTyping(false);
 
@@ -143,7 +148,7 @@ export function Assistant() {
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(input);
     }
@@ -154,13 +159,19 @@ export function Assistant() {
       {/* ── Header ─── */}
       <div className="flex items-center justify-between mb-4 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-xl" aria-hidden="true">
+          <div
+            className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-xl"
+            aria-hidden="true"
+          >
             🤖
           </div>
           <div>
             <h1 className="text-base font-bold text-gray-900">EcoBot</h1>
             <p className="text-xs text-green-600 font-medium flex items-center gap-1">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" aria-hidden="true" />
+              <span
+                className="w-2 h-2 bg-green-500 rounded-full animate-pulse"
+                aria-hidden="true"
+              />
               Online · Carbon footprint assistant
             </p>
           </div>
@@ -188,11 +199,16 @@ export function Assistant() {
         {/* Welcome state */}
         {chatHistory.length === 0 && (
           <div className="text-center py-8 space-y-4">
-            <div className="text-5xl" aria-hidden="true">🌍</div>
+            <div className="text-5xl" aria-hidden="true">
+              🌍
+            </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-800">Hi! I'm EcoBot 👋</h2>
+              <h2 className="text-lg font-semibold text-gray-800">
+                Hi! I'm EcoBot 👋
+              </h2>
               <p className="text-sm text-gray-500 mt-1 max-w-xs mx-auto">
-                Your AI-powered carbon footprint assistant. Ask me anything about reducing your environmental impact!
+                Your AI-powered carbon footprint assistant. Ask me anything
+                about reducing your environmental impact!
               </p>
             </div>
 
@@ -230,7 +246,10 @@ export function Assistant() {
             role="status"
             aria-label="EcoBot is typing"
           >
-            <div className="w-8 h-8 rounded-xl bg-green-600 flex items-center justify-center text-white text-sm shrink-0" aria-hidden="true">
+            <div
+              className="w-8 h-8 rounded-xl bg-green-600 flex items-center justify-center text-white text-sm shrink-0"
+              aria-hidden="true"
+            >
               🤖
             </div>
             <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm flex gap-1 items-center">

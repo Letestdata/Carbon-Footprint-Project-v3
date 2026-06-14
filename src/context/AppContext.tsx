@@ -9,7 +9,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
-} from 'react';
+} from "react";
 import type {
   ActivityEntry,
   UserProfile,
@@ -17,8 +17,8 @@ import type {
   ChatMessage,
   NavPage,
   Category,
-} from '../types';
-import { ACHIEVEMENTS } from '../data/achievements';
+} from "../types";
+import { ACHIEVEMENTS } from "../data/achievements";
 
 // ── State ────────────────────────────────────────────────────
 
@@ -33,20 +33,20 @@ export interface AppState {
 // ── Actions ──────────────────────────────────────────────────
 
 export type Action =
-  | { type: 'SET_PAGE'; payload: NavPage }
-  | { type: 'UPDATE_PROFILE'; payload: Partial<UserProfile> }
-  | { type: 'ADD_ENTRY'; payload: ActivityEntry }
-  | { type: 'DELETE_ENTRY'; payload: { date: string; entryId: string } }
-  | { type: 'ADD_CHAT_MESSAGE'; payload: ChatMessage }
-  | { type: 'CLEAR_CHAT' }
-  | { type: 'CHECK_ACHIEVEMENTS' }
-  | { type: 'LOAD_STATE'; payload: AppState };
+  | { type: "SET_PAGE"; payload: NavPage }
+  | { type: "UPDATE_PROFILE"; payload: Partial<UserProfile> }
+  | { type: "ADD_ENTRY"; payload: ActivityEntry }
+  | { type: "DELETE_ENTRY"; payload: { date: string; entryId: string } }
+  | { type: "ADD_CHAT_MESSAGE"; payload: ChatMessage }
+  | { type: "CLEAR_CHAT" }
+  | { type: "CHECK_ACHIEVEMENTS" }
+  | { type: "LOAD_STATE"; payload: AppState };
 
 // ── Initial State ────────────────────────────────────────────
 
 const DEFAULT_PROFILE: UserProfile = {
-  name: 'Eco User',
-  location: 'Global',
+  name: "Eco User",
+  location: "Global",
   householdSize: 2,
   monthlyBudgetGoal: 200,
   joinedAt: new Date().toISOString(),
@@ -56,28 +56,30 @@ export const INITIAL_STATE: AppState = {
   profile: DEFAULT_PROFILE,
   logs: [],
   chatHistory: [],
-  currentPage: 'dashboard',
+  currentPage: "dashboard",
   earnedAchievements: [],
 };
 
 // ── Reducer ──────────────────────────────────────────────────
 
 function findOrCreateLog(logs: DailyLog[], date: string): DailyLog {
-  return logs.find((l) => l.date === date) ?? { date, totalCo2e: 0, entries: [] };
+  return (
+    logs.find((l) => l.date === date) ?? { date, totalCo2e: 0, entries: [] }
+  );
 }
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
-    case 'LOAD_STATE':
+    case "LOAD_STATE":
       return action.payload;
 
-    case 'SET_PAGE':
+    case "SET_PAGE":
       return { ...state, currentPage: action.payload };
 
-    case 'UPDATE_PROFILE':
+    case "UPDATE_PROFILE":
       return { ...state, profile: { ...state.profile, ...action.payload } };
 
-    case 'ADD_ENTRY': {
+    case "ADD_ENTRY": {
       const entry = action.payload;
       const existingLog = findOrCreateLog(state.logs, entry.date);
       const updatedLog: DailyLog = {
@@ -86,16 +88,25 @@ export function reducer(state: AppState, action: Action): AppState {
         totalCo2e: existingLog.totalCo2e + entry.co2e,
       };
       const otherLogs = state.logs.filter((l) => l.date !== entry.date);
-      return { ...state, logs: [...otherLogs, updatedLog].sort((a, b) => b.date.localeCompare(a.date)) };
+      return {
+        ...state,
+        logs: [...otherLogs, updatedLog].sort((a, b) =>
+          b.date.localeCompare(a.date),
+        ),
+      };
     }
 
-    case 'DELETE_ENTRY': {
+    case "DELETE_ENTRY": {
       const { date, entryId } = action.payload;
       const log = state.logs.find((l) => l.date === date);
       if (!log) return state;
       const updatedEntries = log.entries.filter((e) => e.id !== entryId);
       const updatedCo2e = updatedEntries.reduce((s, e) => s + e.co2e, 0);
-      const updatedLog: DailyLog = { ...log, entries: updatedEntries, totalCo2e: updatedCo2e };
+      const updatedLog: DailyLog = {
+        ...log,
+        entries: updatedEntries,
+        totalCo2e: updatedCo2e,
+      };
       return {
         ...state,
         logs: state.logs
@@ -104,18 +115,22 @@ export function reducer(state: AppState, action: Action): AppState {
       };
     }
 
-    case 'ADD_CHAT_MESSAGE':
+    case "ADD_CHAT_MESSAGE":
       return { ...state, chatHistory: [...state.chatHistory, action.payload] };
 
-    case 'CLEAR_CHAT':
+    case "CLEAR_CHAT":
       return { ...state, chatHistory: [] };
 
-    case 'CHECK_ACHIEVEMENTS': {
+    case "CHECK_ACHIEVEMENTS": {
       const newEarned = ACHIEVEMENTS.filter(
-        (a) => !state.earnedAchievements.includes(a.id) && a.condition(state.logs)
+        (a) =>
+          !state.earnedAchievements.includes(a.id) && a.condition(state.logs),
       ).map((a) => a.id);
       if (newEarned.length === 0) return state;
-      return { ...state, earnedAchievements: [...state.earnedAchievements, ...newEarned] };
+      return {
+        ...state,
+        earnedAchievements: [...state.earnedAchievements, ...newEarned],
+      };
     }
 
     default:
@@ -141,7 +156,7 @@ interface AppContextValue {
 
 const AppContext = createContext<AppContextValue | null>(null);
 
-const STORAGE_KEY = 'ecotrack_state_v2';
+const STORAGE_KEY = "ecotrack_state_v2";
 
 // ── Provider ─────────────────────────────────────────────────
 
@@ -154,7 +169,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed: AppState = JSON.parse(raw);
-        dispatch({ type: 'LOAD_STATE', payload: { ...INITIAL_STATE, ...parsed } });
+        dispatch({
+          type: "LOAD_STATE",
+          payload: { ...INITIAL_STATE, ...parsed },
+        });
       }
     } catch {
       // Silently ignore parse errors – start fresh
@@ -172,33 +190,33 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   // Check achievements whenever logs change
   useEffect(() => {
-    dispatch({ type: 'CHECK_ACHIEVEMENTS' });
+    dispatch({ type: "CHECK_ACHIEVEMENTS" });
   }, [state.logs]);
 
   // ── Actions ────────────────────────────────────────────────
 
   const navigate = useCallback((page: NavPage) => {
-    dispatch({ type: 'SET_PAGE', payload: page });
+    dispatch({ type: "SET_PAGE", payload: page });
   }, []);
 
   const updateProfile = useCallback((update: Partial<UserProfile>) => {
-    dispatch({ type: 'UPDATE_PROFILE', payload: update });
+    dispatch({ type: "UPDATE_PROFILE", payload: update });
   }, []);
 
   const addEntry = useCallback((entry: ActivityEntry) => {
-    dispatch({ type: 'ADD_ENTRY', payload: entry });
+    dispatch({ type: "ADD_ENTRY", payload: entry });
   }, []);
 
   const deleteEntry = useCallback((date: string, entryId: string) => {
-    dispatch({ type: 'DELETE_ENTRY', payload: { date, entryId } });
+    dispatch({ type: "DELETE_ENTRY", payload: { date, entryId } });
   }, []);
 
   const addChatMessage = useCallback((msg: ChatMessage) => {
-    dispatch({ type: 'ADD_CHAT_MESSAGE', payload: msg });
+    dispatch({ type: "ADD_CHAT_MESSAGE", payload: msg });
   }, []);
 
   const clearChat = useCallback(() => {
-    dispatch({ type: 'CLEAR_CHAT' });
+    dispatch({ type: "CLEAR_CHAT" });
   }, []);
 
   // ── Computed ───────────────────────────────────────────────
@@ -217,13 +235,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const categoryBreakdown = useMemo<Record<Category, number>>(() => {
     const month = new Date().toISOString().slice(0, 7);
-    const base: Record<Category, number> = { transport: 0, energy: 0, food: 0, shopping: 0, waste: 0 };
+    const base: Record<Category, number> = {
+      transport: 0,
+      energy: 0,
+      food: 0,
+      shopping: 0,
+      waste: 0,
+    };
     state.logs
       .filter((l) => l.date.startsWith(month))
       .forEach((log) =>
         log.entries.forEach((e) => {
           base[e.category] = base[e.category] + e.co2e;
-        })
+        }),
       );
     return base;
   }, [state.logs]);
@@ -252,7 +276,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       totalMonthCo2e,
       todayCo2e,
       categoryBreakdown,
-    ]
+    ],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
@@ -262,6 +286,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
 export function useApp(): AppContextValue {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error('useApp must be used inside <AppProvider>');
+  if (!ctx) throw new Error("useApp must be used inside <AppProvider>");
   return ctx;
 }

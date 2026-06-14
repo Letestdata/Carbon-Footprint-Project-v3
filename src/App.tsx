@@ -3,14 +3,14 @@
 // Google Cloud Console Deployment Ready
 // ============================================================
 
-import { AppProvider, useApp } from './context/AppContext';
-import { Navigation } from './components/Navigation';
-import { Dashboard } from './pages/Dashboard';
-import { LogActivity } from './pages/LogActivity';
-import { Insights } from './pages/Insights';
-import { Tips } from './pages/Tips';
-import { Assistant } from './pages/Assistant';
-import { Profile } from './pages/Profile';
+import { AppProvider, useApp } from "./context/AppContext";
+import { Navigation } from "./components/Navigation";
+import { Dashboard } from "./pages/Dashboard";
+import { LogActivity } from "./pages/LogActivity";
+import { Insights } from "./pages/Insights";
+import { Tips } from "./pages/Tips";
+import { Assistant } from "./pages/Assistant";
+import { Profile } from "./pages/Profile";
 
 // ── Skip-to-content link (accessibility) ─────────────────────
 
@@ -32,13 +32,20 @@ function PageRouter() {
   const { currentPage } = state;
 
   switch (currentPage) {
-    case 'dashboard': return <Dashboard />;
-    case 'log':       return <LogActivity />;
-    case 'insights':  return <Insights />;
-    case 'tips':      return <Tips />;
-    case 'assistant': return <Assistant />;
-    case 'profile':   return <Profile />;
-    default:          return <Dashboard />;
+    case "dashboard":
+      return <Dashboard />;
+    case "log":
+      return <LogActivity />;
+    case "insights":
+      return <Insights />;
+    case "tips":
+      return <Tips />;
+    case "assistant":
+      return <Assistant />;
+    case "profile":
+      return <Profile />;
+    default:
+      return <Dashboard />;
   }
 }
 
@@ -51,7 +58,11 @@ function AppLayout() {
       <Navigation />
 
       {/* Desktop: offset for sidebar; Mobile: full width */}
-      <main id="main-content" tabIndex={-1} className="md:ml-64 focus:outline-none">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="md:ml-64 focus:outline-none"
+      >
         <div className="max-w-3xl mx-auto px-4 pt-6 md:pt-8 pb-24 md:pb-8">
           <PageRouter />
         </div>

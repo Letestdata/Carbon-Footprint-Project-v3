@@ -2,17 +2,28 @@
 // EcoTrack – Dashboard Page
 // ============================================================
 
-import { useMemo } from 'react';
+import { useMemo } from "react";
 import {
-  AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid,
-} from 'recharts';
-import { useApp } from '../context/AppContext';
-import { Card, CardHeader } from '../components/ui/Card';
-import { ProgressBar } from '../components/ui/ProgressBar';
-import { Button } from '../components/ui/Button';
-import { GLOBAL_AVERAGE_MONTHLY_KG, PARIS_TARGET_MONTHLY_KG, CATEGORY_COLORS, CATEGORY_LABELS } from '../data/emissionFactors';
-import { ACHIEVEMENTS } from '../data/achievements';
-import type { Category } from '../types';
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
+import { useApp } from "../context/AppContext";
+import { Card, CardHeader } from "../components/ui/Card";
+import { ProgressBar } from "../components/ui/ProgressBar";
+import { Button } from "../components/ui/Button";
+import {
+  GLOBAL_AVERAGE_MONTHLY_KG,
+  PARIS_TARGET_MONTHLY_KG,
+  CATEGORY_COLORS,
+  CATEGORY_LABELS,
+} from "../data/emissionFactors";
+import { ACHIEVEMENTS } from "../data/achievements";
+import type { Category } from "../types";
 
 // ── Stat card ────────────────────────────────────────────────
 
@@ -28,7 +39,9 @@ interface StatCardProps {
 function StatCard({ label, value, sub, icon, color, bgColor }: StatCardProps) {
   return (
     <div className={`rounded-2xl p-5 ${bgColor} flex items-start gap-4`}>
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${color} shrink-0`}>
+      <div
+        className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${color} shrink-0`}
+      >
         {icon}
       </div>
       <div className="min-w-0">
@@ -43,7 +56,8 @@ function StatCard({ label, value, sub, icon, color, bgColor }: StatCardProps) {
 // ── Main component ────────────────────────────────────────────
 
 export function Dashboard() {
-  const { state, navigate, totalMonthCo2e, todayCo2e, categoryBreakdown } = useApp();
+  const { state, navigate, totalMonthCo2e, todayCo2e, categoryBreakdown } =
+    useApp();
   const { profile, logs, earnedAchievements } = state;
 
   // Last 7 days chart data
@@ -55,7 +69,7 @@ export function Dashboard() {
       const dateStr = d.toISOString().slice(0, 10);
       const log = logs.find((l) => l.date === dateStr);
       days.push({
-        day: d.toLocaleDateString('en', { weekday: 'short' }),
+        day: d.toLocaleDateString("en", { weekday: "short" }),
         date: dateStr,
         co2e: parseFloat((log?.totalCo2e ?? 0).toFixed(2)),
       });
@@ -73,20 +87,30 @@ export function Dashboard() {
 
   const maxCatValue = useMemo(
     () => Math.max(...topCategories.map(([, v]) => v), 1),
-    [topCategories]
+    [topCategories],
   );
 
   // Goal progress
-  const goalPct = Math.min((totalMonthCo2e / profile.monthlyBudgetGoal) * 100, 100);
+  const goalPct = Math.min(
+    (totalMonthCo2e / profile.monthlyBudgetGoal) * 100,
+    100,
+  );
   const goalColor =
-    goalPct < 70 ? 'bg-green-500' : goalPct < 90 ? 'bg-amber-500' : 'bg-red-500';
+    goalPct < 70
+      ? "bg-green-500"
+      : goalPct < 90
+        ? "bg-amber-500"
+        : "bg-red-500";
 
   // vs global average
-  const vsAverage = ((totalMonthCo2e / GLOBAL_AVERAGE_MONTHLY_KG) * 100).toFixed(0);
+  const vsAverage = (
+    (totalMonthCo2e / GLOBAL_AVERAGE_MONTHLY_KG) *
+    100
+  ).toFixed(0);
 
   // Recent achievements
   const recentAchievements = ACHIEVEMENTS.filter((a) =>
-    earnedAchievements.includes(a.id)
+    earnedAchievements.includes(a.id),
   ).slice(0, 3);
 
   return (
@@ -95,15 +119,22 @@ export function Dashboard() {
       <section aria-labelledby="welcome-heading">
         <div className="bg-gradient-to-r from-green-600 to-emerald-500 rounded-2xl p-6 text-white">
           <h1 id="welcome-heading" className="text-xl font-bold">
-            Welcome back, {profile.name.split(' ')[0]}! 🌍
+            Welcome back, {profile.name.split(" ")[0]}! 🌍
           </h1>
           <p className="text-green-100 text-sm mt-1">
-            {new Date().toLocaleDateString('en', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+            {new Date().toLocaleDateString("en", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
           </p>
 
           {/* Paris comparison */}
           <div className="mt-4 bg-white/20 rounded-xl p-4 backdrop-blur-sm">
-            <p className="text-sm font-medium text-white/90">Monthly Emissions</p>
+            <p className="text-sm font-medium text-white/90">
+              Monthly Emissions
+            </p>
             <p className="text-3xl font-bold mt-1">
               {totalMonthCo2e.toFixed(1)}
               <span className="text-lg font-normal ml-1">kg CO₂e</span>
@@ -119,7 +150,9 @@ export function Dashboard() {
 
       {/* ── Stats grid ─── */}
       <section aria-labelledby="stats-heading">
-        <h2 id="stats-heading" className="sr-only">Key Statistics</h2>
+        <h2 id="stats-heading" className="sr-only">
+          Key Statistics
+        </h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <StatCard
             label="Today"
@@ -189,9 +222,15 @@ export function Dashboard() {
             icon="📈"
             subtitle="Daily CO₂e emissions"
           />
-          <div role="img" aria-label="Area chart showing CO₂e emissions for the past 7 days">
+          <div
+            role="img"
+            aria-label="Area chart showing CO₂e emissions for the past 7 days"
+          >
             <ResponsiveContainer width="100%" height={180}>
-              <AreaChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+              <AreaChart
+                data={chartData}
+                margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
+              >
                 <defs>
                   <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#16a34a" stopOpacity={0.3} />
@@ -202,8 +241,15 @@ export function Dashboard() {
                 <XAxis dataKey="day" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} />
                 <Tooltip
-                  formatter={(v) => [`${Number(v).toFixed(2)} kg CO₂e`, 'Emissions']}
-                  contentStyle={{ borderRadius: 12, border: '1px solid #e5e7eb', fontSize: 12 }}
+                  formatter={(v) => [
+                    `${Number(v).toFixed(2)} kg CO₂e`,
+                    "Emissions",
+                  ]}
+                  contentStyle={{
+                    borderRadius: 12,
+                    border: "1px solid #e5e7eb",
+                    fontSize: 12,
+                  }}
                 />
                 <Area
                   type="monotone"
@@ -262,32 +308,36 @@ export function Dashboard() {
       {/* ── Quick actions ─── */}
       <section aria-labelledby="actions-heading">
         <Card>
-          <CardHeader titleId="actions-heading" title="Quick Actions" icon="⚡" />
+          <CardHeader
+            titleId="actions-heading"
+            title="Quick Actions"
+            icon="⚡"
+          />
           <div className="grid grid-cols-2 gap-3">
             <Button
               variant="primary"
-              onClick={() => navigate('log')}
+              onClick={() => navigate("log")}
               aria-label="Log a new carbon activity"
             >
               ✏️ Log Activity
             </Button>
             <Button
               variant="secondary"
-              onClick={() => navigate('assistant')}
+              onClick={() => navigate("assistant")}
               aria-label="Open AI assistant for personalised tips"
             >
               🤖 Ask EcoBot
             </Button>
             <Button
               variant="secondary"
-              onClick={() => navigate('insights')}
+              onClick={() => navigate("insights")}
               aria-label="View detailed insights"
             >
               📊 View Insights
             </Button>
             <Button
               variant="secondary"
-              onClick={() => navigate('tips')}
+              onClick={() => navigate("tips")}
               aria-label="Browse eco-friendly tips"
             >
               💡 Eco Tips
@@ -311,9 +361,13 @@ export function Dashboard() {
                   key={a.id}
                   className="flex items-center gap-2 bg-amber-50 rounded-xl px-3 py-2"
                 >
-                  <span className="text-2xl" aria-hidden="true">{a.icon}</span>
+                  <span className="text-2xl" aria-hidden="true">
+                    {a.icon}
+                  </span>
                   <div>
-                    <p className="text-sm font-semibold text-gray-800">{a.title}</p>
+                    <p className="text-sm font-semibold text-gray-800">
+                      {a.title}
+                    </p>
                     <p className="text-xs text-gray-500">{a.description}</p>
                   </div>
                 </li>
@@ -326,12 +380,21 @@ export function Dashboard() {
       {/* ── Empty state ─── */}
       {logs.length === 0 && (
         <div className="text-center py-8">
-          <div className="text-5xl mb-4" aria-hidden="true">🌱</div>
-          <h2 className="text-lg font-semibold text-gray-800">Start Your Eco Journey</h2>
+          <div className="text-5xl mb-4" aria-hidden="true">
+            🌱
+          </div>
+          <h2 className="text-lg font-semibold text-gray-800">
+            Start Your Eco Journey
+          </h2>
           <p className="text-gray-500 text-sm mt-1 max-w-xs mx-auto">
-            Log your first activity to see your personal carbon footprint and get tailored insights.
+            Log your first activity to see your personal carbon footprint and
+            get tailored insights.
           </p>
-          <Button className="mt-4" onClick={() => navigate('log')} aria-label="Log your first activity">
+          <Button
+            className="mt-4"
+            onClick={() => navigate("log")}
+            aria-label="Log your first activity"
+          >
             Log My First Activity
           </Button>
         </div>

@@ -2,7 +2,7 @@
 // EcoTrack – Type Definitions
 // ============================================================
 
-export type Category = 'transport' | 'energy' | 'food' | 'shopping' | 'waste';
+export type Category = "transport" | "energy" | "food" | "shopping" | "waste";
 
 export interface ActivityEntry {
   id: string;
@@ -34,7 +34,7 @@ export interface WeeklyInsight {
   totalCo2e: number;
   breakdown: Record<Category, number>;
   topCategory: Category;
-  trend: 'up' | 'down' | 'stable';
+  trend: "up" | "down" | "stable";
   trendPercentage: number;
 }
 
@@ -44,7 +44,7 @@ export interface Tip {
   title: string;
   description: string;
   potentialSaving: number; // kg CO2e per month
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: "easy" | "medium" | "hard";
   icon: string;
 }
 
@@ -59,7 +59,7 @@ export interface Achievement {
 
 export interface ChatMessage {
   id: string;
-  role: 'user' | 'assistant';
+  role: "user" | "assistant";
   content: string;
   timestamp: string;
 }
@@ -72,4 +72,10 @@ export interface EmissionFactor {
   subcategory: string;
 }
 
-export type NavPage = 'dashboard' | 'log' | 'insights' | 'tips' | 'assistant' | 'profile';
+export type NavPage =
+  | "dashboard"
+  | "log"
+  | "insights"
+  | "tips"
+  | "assistant"
+  | "profile";

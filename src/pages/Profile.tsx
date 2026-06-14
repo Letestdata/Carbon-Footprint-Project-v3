@@ -2,13 +2,16 @@
 // EcoTrack – Profile Page
 // ============================================================
 
-import { useState, useId } from 'react';
-import { useApp } from '../context/AppContext';
-import { Card, CardHeader } from '../components/ui/Card';
-import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
-import { ACHIEVEMENTS } from '../data/achievements';
-import { GLOBAL_AVERAGE_MONTHLY_KG, PARIS_TARGET_MONTHLY_KG } from '../data/emissionFactors';
+import { useState, useId } from "react";
+import { useApp } from "../context/AppContext";
+import { Card, CardHeader } from "../components/ui/Card";
+import { Button } from "../components/ui/Button";
+import { Badge } from "../components/ui/Badge";
+import { ACHIEVEMENTS } from "../data/achievements";
+import {
+  GLOBAL_AVERAGE_MONTHLY_KG,
+  PARIS_TARGET_MONTHLY_KG,
+} from "../data/emissionFactors";
 
 export function Profile() {
   const { state, updateProfile, totalMonthCo2e } = useApp();
@@ -17,10 +20,14 @@ export function Profile() {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(profile.name);
   const [location, setLocation] = useState(profile.location);
-  const [householdSize, setHouseholdSize] = useState(String(profile.householdSize));
-  const [monthlyGoal, setMonthlyGoal] = useState(String(profile.monthlyBudgetGoal));
+  const [householdSize, setHouseholdSize] = useState(
+    String(profile.householdSize),
+  );
+  const [monthlyGoal, setMonthlyGoal] = useState(
+    String(profile.monthlyBudgetGoal),
+  );
   const [saved, setSaved] = useState(false);
-  const [formError, setFormError] = useState('');
+  const [formError, setFormError] = useState("");
 
   const nameId = useId();
   const locationId = useId();
@@ -29,19 +36,19 @@ export function Profile() {
 
   function handleSave(e: React.FormEvent) {
     e.preventDefault();
-    setFormError('');
+    setFormError("");
     const parsedSize = parseInt(householdSize);
     const parsedGoal = parseFloat(monthlyGoal);
     if (!name.trim()) {
-      setFormError('Name cannot be empty.');
+      setFormError("Name cannot be empty.");
       return;
     }
     if (isNaN(parsedSize) || parsedSize < 1 || parsedSize > 20) {
-      setFormError('Household size must be between 1 and 20.');
+      setFormError("Household size must be between 1 and 20.");
       return;
     }
     if (isNaN(parsedGoal) || parsedGoal < 10) {
-      setFormError('Monthly goal must be at least 10 kg CO₂e.');
+      setFormError("Monthly goal must be at least 10 kg CO₂e.");
       return;
     }
     updateProfile({
@@ -61,7 +68,7 @@ export function Profile() {
     setHouseholdSize(String(profile.householdSize));
     setMonthlyGoal(String(profile.monthlyBudgetGoal));
     setEditing(false);
-    setFormError('');
+    setFormError("");
   }
 
   // Stats
@@ -71,12 +78,17 @@ export function Profile() {
 
   // Emission rating
   const rating = (() => {
-    if (totalMonthCo2e === 0) return { label: 'Not tracked yet', color: 'gray', icon: '⬜' };
-    if (totalMonthCo2e <= PARIS_TARGET_MONTHLY_KG) return { label: 'Climate Champion 🌟', color: 'green', icon: '🌟' };
-    if (totalMonthCo2e <= GLOBAL_AVERAGE_MONTHLY_KG * 0.5) return { label: 'Eco Hero', color: 'green', icon: '🌍' };
-    if (totalMonthCo2e <= GLOBAL_AVERAGE_MONTHLY_KG) return { label: 'Below Average', color: 'blue', icon: '✅' };
-    if (totalMonthCo2e <= GLOBAL_AVERAGE_MONTHLY_KG * 1.5) return { label: 'Above Average', color: 'amber', icon: '⚠️' };
-    return { label: 'High Emitter', color: 'red', icon: '🔴' };
+    if (totalMonthCo2e === 0)
+      return { label: "Not tracked yet", color: "gray", icon: "⬜" };
+    if (totalMonthCo2e <= PARIS_TARGET_MONTHLY_KG)
+      return { label: "Climate Champion 🌟", color: "green", icon: "🌟" };
+    if (totalMonthCo2e <= GLOBAL_AVERAGE_MONTHLY_KG * 0.5)
+      return { label: "Eco Hero", color: "green", icon: "🌍" };
+    if (totalMonthCo2e <= GLOBAL_AVERAGE_MONTHLY_KG)
+      return { label: "Below Average", color: "blue", icon: "✅" };
+    if (totalMonthCo2e <= GLOBAL_AVERAGE_MONTHLY_KG * 1.5)
+      return { label: "Above Average", color: "amber", icon: "⚠️" };
+    return { label: "High Emitter", color: "red", icon: "🔴" };
   })();
 
   return (
@@ -91,7 +103,9 @@ export function Profile() {
           className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3"
         >
           <span aria-hidden="true">✅</span>
-          <p className="text-green-800 text-sm font-medium">Profile saved successfully!</p>
+          <p className="text-green-800 text-sm font-medium">
+            Profile saved successfully!
+          </p>
         </div>
       )}
 
@@ -119,8 +133,14 @@ export function Profile() {
           {editing ? (
             <form onSubmit={handleSave} noValidate className="space-y-4">
               <div>
-                <label htmlFor={nameId} className="block text-sm font-medium text-gray-700 mb-1">
-                  Name <span aria-hidden="true" className="text-red-500">*</span>
+                <label
+                  htmlFor={nameId}
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Name{" "}
+                  <span aria-hidden="true" className="text-red-500">
+                    *
+                  </span>
                 </label>
                 <input
                   id={nameId}
@@ -135,7 +155,10 @@ export function Profile() {
               </div>
 
               <div>
-                <label htmlFor={locationId} className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor={locationId}
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Location
                 </label>
                 <input
@@ -150,8 +173,14 @@ export function Profile() {
               </div>
 
               <div>
-                <label htmlFor={householdId} className="block text-sm font-medium text-gray-700 mb-1">
-                  Household Size <span aria-hidden="true" className="text-red-500">*</span>
+                <label
+                  htmlFor={householdId}
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Household Size{" "}
+                  <span aria-hidden="true" className="text-red-500">
+                    *
+                  </span>
                 </label>
                 <input
                   id={householdId}
@@ -167,8 +196,14 @@ export function Profile() {
               </div>
 
               <div>
-                <label htmlFor={goalId} className="block text-sm font-medium text-gray-700 mb-1">
-                  Monthly CO₂e Goal (kg) <span aria-hidden="true" className="text-red-500">*</span>
+                <label
+                  htmlFor={goalId}
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Monthly CO₂e Goal (kg){" "}
+                  <span aria-hidden="true" className="text-red-500">
+                    *
+                  </span>
                 </label>
                 <input
                   id={goalId}
@@ -187,25 +222,59 @@ export function Profile() {
               </div>
 
               {formError && (
-                <p role="alert" className="text-sm text-red-600">{formError}</p>
+                <p role="alert" className="text-sm text-red-600">
+                  {formError}
+                </p>
               )}
 
               <div className="flex gap-2">
-                <Button type="submit" className="flex-1">Save Changes</Button>
-                <Button type="button" variant="secondary" onClick={handleCancel}>Cancel</Button>
+                <Button type="submit" className="flex-1">
+                  Save Changes
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
               </div>
             </form>
           ) : (
             <ul className="space-y-3" role="list">
               {[
-                { label: 'Name', value: profile.name, icon: '👤' },
-                { label: 'Location', value: profile.location || '—', icon: '📍' },
-                { label: 'Household Size', value: `${profile.householdSize} person${profile.householdSize > 1 ? 's' : ''}`, icon: '🏠' },
-                { label: 'Monthly Goal', value: `${profile.monthlyBudgetGoal} kg CO₂e`, icon: '🎯' },
-                { label: 'Member Since', value: new Date(profile.joinedAt).toLocaleDateString('en', { year: 'numeric', month: 'long' }), icon: '📅' },
+                { label: "Name", value: profile.name, icon: "👤" },
+                {
+                  label: "Location",
+                  value: profile.location || "—",
+                  icon: "📍",
+                },
+                {
+                  label: "Household Size",
+                  value: `${profile.householdSize} person${profile.householdSize > 1 ? "s" : ""}`,
+                  icon: "🏠",
+                },
+                {
+                  label: "Monthly Goal",
+                  value: `${profile.monthlyBudgetGoal} kg CO₂e`,
+                  icon: "🎯",
+                },
+                {
+                  label: "Member Since",
+                  value: new Date(profile.joinedAt).toLocaleDateString("en", {
+                    year: "numeric",
+                    month: "long",
+                  }),
+                  icon: "📅",
+                },
               ].map(({ label, value, icon }) => (
-                <li key={label} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
-                  <span className="text-lg w-7" aria-hidden="true">{icon}</span>
+                <li
+                  key={label}
+                  className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0"
+                >
+                  <span className="text-lg w-7" aria-hidden="true">
+                    {icon}
+                  </span>
                   <div>
                     <p className="text-xs text-gray-500 font-medium">{label}</p>
                     <p className="text-sm font-medium text-gray-800">{value}</p>
@@ -220,11 +289,21 @@ export function Profile() {
       {/* ── Emission rating ─── */}
       <section aria-labelledby="rating-heading">
         <Card>
-          <CardHeader titleId="rating-heading" title="Emission Rating" icon="⭐" />
+          <CardHeader
+            titleId="rating-heading"
+            title="Emission Rating"
+            icon="⭐"
+          />
           <div className="flex items-center gap-4">
-            <span className="text-4xl" aria-hidden="true">{rating.icon}</span>
+            <span className="text-4xl" aria-hidden="true">
+              {rating.icon}
+            </span>
             <div>
-              <Badge variant={rating.color as 'green' | 'blue' | 'amber' | 'red' | 'gray'}>
+              <Badge
+                variant={
+                  rating.color as "green" | "blue" | "amber" | "red" | "gray"
+                }
+              >
                 {rating.label}
               </Badge>
               <p className="text-sm text-gray-600 mt-1">
@@ -238,12 +317,16 @@ export function Profile() {
       {/* ── Activity stats ─── */}
       <section aria-labelledby="stats-heading">
         <Card>
-          <CardHeader titleId="stats-heading" title="Tracking Stats" icon="📊" />
+          <CardHeader
+            titleId="stats-heading"
+            title="Tracking Stats"
+            icon="📊"
+          />
           <dl className="grid grid-cols-3 gap-4 text-center">
             {[
-              { label: 'Days Logged', value: totalDaysLogged },
-              { label: 'Activities', value: totalEntries },
-              { label: 'Total CO₂e (kg)', value: totalCo2eLogged.toFixed(1) },
+              { label: "Days Logged", value: totalDaysLogged },
+              { label: "Activities", value: totalEntries },
+              { label: "Total CO₂e (kg)", value: totalCo2eLogged.toFixed(1) },
             ].map(({ label, value }) => (
               <div key={label} className="bg-gray-50 rounded-xl p-3">
                 <dd className="text-xl font-bold text-gray-900">{value}</dd>
@@ -270,21 +353,31 @@ export function Profile() {
                 <li
                   key={a.id}
                   className={`rounded-xl p-3 flex items-start gap-2.5 transition-all ${
-                    earned ? 'bg-amber-50 border border-amber-100' : 'bg-gray-50 opacity-60'
+                    earned
+                      ? "bg-amber-50 border border-amber-100"
+                      : "bg-gray-50 opacity-60"
                   }`}
-                  aria-label={earned ? `Earned: ${a.title}` : `Locked: ${a.title}`}
+                  aria-label={
+                    earned ? `Earned: ${a.title}` : `Locked: ${a.title}`
+                  }
                 >
                   <span
-                    className={`text-2xl shrink-0 ${earned ? '' : 'grayscale'}`}
+                    className={`text-2xl shrink-0 ${earned ? "" : "grayscale"}`}
                     aria-hidden="true"
                   >
                     {a.icon}
                   </span>
                   <div>
-                    <p className="text-xs font-semibold text-gray-800">{a.title}</p>
-                    <p className="text-xs text-gray-500 mt-0.5 leading-tight">{a.description}</p>
+                    <p className="text-xs font-semibold text-gray-800">
+                      {a.title}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-0.5 leading-tight">
+                      {a.description}
+                    </p>
                     {earned && (
-                      <span className="text-xs text-amber-600 font-medium">✓ Earned</span>
+                      <span className="text-xs text-amber-600 font-medium">
+                        ✓ Earned
+                      </span>
                     )}
                   </div>
                 </li>
@@ -300,13 +393,18 @@ export function Profile() {
           <CardHeader titleId="data-heading" title="Data & Privacy" icon="🔒" />
           <div className="space-y-3">
             <p className="text-sm text-gray-600">
-              All your data is stored locally on your device. We do not collect or transmit any personal data to external servers.
+              All your data is stored locally on your device. We do not collect
+              or transmit any personal data to external servers.
             </p>
             <Button
               variant="danger"
               size="sm"
               onClick={() => {
-                if (window.confirm('Are you sure you want to clear all your data? This cannot be undone.')) {
+                if (
+                  window.confirm(
+                    "Are you sure you want to clear all your data? This cannot be undone.",
+                  )
+                ) {
                   localStorage.clear();
                   window.location.reload();
                 }

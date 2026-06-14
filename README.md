@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 🌍 EcoTrack – Smart Carbon Footprint Tracker
 
 > **Challenge Vertical:** Carbon Footprint Tracker  
@@ -249,12 +250,3 @@ If adopted at scale, EcoTrack could help users:
 ## 📄 License
 
 MIT License © 2024 EcoTrack. Built with 💚 for a sustainable future.
-=======
-# ecotrack-carbon-tracker
->>>>>>> 545dfe63d530f495521e6771be637286c160e413
-=======
-# Carbon-project
->>>>>>> 719fac852d5f8b9f8e2ae902f970bdcdc8771ed4
-=======
-# Carbon-project-v3
->>>>>>> 1c73ede331aa26289cde9c741d446683bda07527

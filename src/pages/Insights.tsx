@@ -2,25 +2,36 @@
 // EcoTrack – Insights Page
 // ============================================================
 
-import { useMemo } from 'react';
+import { useMemo } from "react";
 import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend, CartesianGrid,
-} from 'recharts';
-import { useApp } from '../context/AppContext';
-import { Card, CardHeader } from '../components/ui/Card';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  CartesianGrid,
+} from "recharts";
+import { useApp } from "../context/AppContext";
+import { Card, CardHeader } from "../components/ui/Card";
 import {
-  CATEGORY_COLORS, CATEGORY_LABELS,
-  GLOBAL_AVERAGE_MONTHLY_KG, PARIS_TARGET_MONTHLY_KG,
-} from '../data/emissionFactors';
-import type { Category } from '../types';
+  CATEGORY_COLORS,
+  CATEGORY_LABELS,
+  GLOBAL_AVERAGE_MONTHLY_KG,
+  PARIS_TARGET_MONTHLY_KG,
+} from "../data/emissionFactors";
+import type { Category } from "../types";
 
 // ── Benchmark data ────────────────────────────────────────────
 
 const BENCHMARKS = [
-  { name: 'You',         fill: '#16a34a' },
-  { name: 'Paris 1.5°C', fill: '#6366f1' },
-  { name: 'Global Avg',  fill: '#f59e0b' },
+  { name: "You", fill: "#16a34a" },
+  { name: "Paris 1.5°C", fill: "#6366f1" },
+  { name: "Global Avg", fill: "#f59e0b" },
 ];
 
 // ── Main component ────────────────────────────────────────────
@@ -40,7 +51,10 @@ export function Insights() {
       .sort((a, b) => a[0].localeCompare(b[0]))
       .slice(-6)
       .map(([month, total]) => ({
-        month: new Date(month + '-01').toLocaleDateString('en', { month: 'short', year: '2-digit' }),
+        month: new Date(month + "-01").toLocaleDateString("en", {
+          month: "short",
+          year: "2-digit",
+        }),
         total: parseFloat(total.toFixed(2)),
       }));
   }, [logs]);
@@ -58,7 +72,12 @@ export function Insights() {
 
   // Benchmark comparison
   const benchmarkData = [
-    { name: 'Monthly kg CO₂e', You: parseFloat(totalMonthCo2e.toFixed(2)), 'Paris 1.5°C': PARIS_TARGET_MONTHLY_KG, 'Global Avg': GLOBAL_AVERAGE_MONTHLY_KG },
+    {
+      name: "Monthly kg CO₂e",
+      You: parseFloat(totalMonthCo2e.toFixed(2)),
+      "Paris 1.5°C": PARIS_TARGET_MONTHLY_KG,
+      "Global Avg": GLOBAL_AVERAGE_MONTHLY_KG,
+    },
   ];
 
   // Top emitting activities this month
@@ -67,10 +86,17 @@ export function Insights() {
     const entries = logs
       .filter((l) => l.date.startsWith(month))
       .flatMap((l) => l.entries);
-    const grouped: Record<string, { label: string; co2e: number; category: Category }> = {};
+    const grouped: Record<
+      string,
+      { label: string; co2e: number; category: Category }
+    > = {};
     entries.forEach((e) => {
       if (!grouped[e.subcategory]) {
-        grouped[e.subcategory] = { label: e.subcategory, co2e: 0, category: e.category };
+        grouped[e.subcategory] = {
+          label: e.subcategory,
+          co2e: 0,
+          category: e.category,
+        };
       }
       grouped[e.subcategory].co2e += e.co2e;
     });
@@ -114,16 +140,44 @@ export function Insights() {
 
       {/* ── Summary stats ─── */}
       <section aria-labelledby="summary-heading">
-        <h2 id="summary-heading" className="sr-only">Summary Statistics</h2>
+        <h2 id="summary-heading" className="sr-only">
+          Summary Statistics
+        </h2>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {[
-            { label: 'This Month', value: `${totalMonthCo2e.toFixed(1)} kg`, sub: 'CO₂e', icon: '📅', bg: 'bg-green-50' },
-            { label: 'Total Logged', value: `${totalEntries}`, sub: 'activities', icon: '📝', bg: 'bg-blue-50' },
-            { label: 'Logging Streak', value: `${currentStreak}`, sub: 'days', icon: '🔥', bg: 'bg-orange-50' },
-            { label: 'vs Global Avg', value: `${Math.abs(vsGlobalSaving).toFixed(0)} kg`, sub: vsGlobalSaving >= 0 ? 'saved' : 'over', icon: '🌐', bg: 'bg-purple-50' },
+            {
+              label: "This Month",
+              value: `${totalMonthCo2e.toFixed(1)} kg`,
+              sub: "CO₂e",
+              icon: "📅",
+              bg: "bg-green-50",
+            },
+            {
+              label: "Total Logged",
+              value: `${totalEntries}`,
+              sub: "activities",
+              icon: "📝",
+              bg: "bg-blue-50",
+            },
+            {
+              label: "Logging Streak",
+              value: `${currentStreak}`,
+              sub: "days",
+              icon: "🔥",
+              bg: "bg-orange-50",
+            },
+            {
+              label: "vs Global Avg",
+              value: `${Math.abs(vsGlobalSaving).toFixed(0)} kg`,
+              sub: vsGlobalSaving >= 0 ? "saved" : "over",
+              icon: "🌐",
+              bg: "bg-purple-50",
+            },
           ].map((s) => (
             <div key={s.label} className={`${s.bg} rounded-2xl p-4`}>
-              <span className="text-2xl" aria-hidden="true">{s.icon}</span>
+              <span className="text-2xl" aria-hidden="true">
+                {s.icon}
+              </span>
               <p className="text-xl font-bold text-gray-900 mt-1">{s.value}</p>
               <p className="text-xs text-gray-500">{s.label}</p>
             </div>
@@ -140,9 +194,15 @@ export function Insights() {
             icon="🎯"
             subtitle={vsGlobalLabel}
           />
-          <div role="img" aria-label="Bar chart comparing your monthly emissions against Paris target and global average">
+          <div
+            role="img"
+            aria-label="Bar chart comparing your monthly emissions against Paris target and global average"
+          >
             <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={benchmarkData} margin={{ top: 5, right: 5, left: -10, bottom: 5 }}>
+              <BarChart
+                data={benchmarkData}
+                margin={{ top: 5, right: 5, left: -10, bottom: 5 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="name" tick={{ fontSize: 11 }} />
                 <YAxis tick={{ fontSize: 11 }} unit=" kg" />
@@ -151,7 +211,12 @@ export function Insights() {
                   contentStyle={{ borderRadius: 12, fontSize: 12 }}
                 />
                 {BENCHMARKS.map((b) => (
-                  <Bar key={b.name} dataKey={b.name} fill={b.fill} radius={[6, 6, 0, 0]} />
+                  <Bar
+                    key={b.name}
+                    dataKey={b.name}
+                    fill={b.fill}
+                    radius={[6, 6, 0, 0]}
+                  />
                 ))}
                 <Legend iconType="circle" wrapperStyle={{ fontSize: 12 }} />
               </BarChart>
@@ -161,18 +226,41 @@ export function Insights() {
           {/* Comparison rows */}
           <div className="mt-4 space-y-2">
             {[
-              { label: 'Paris 1.5°C target', value: PARIS_TARGET_MONTHLY_KG, color: '#6366f1' },
-              { label: 'Global average', value: GLOBAL_AVERAGE_MONTHLY_KG, color: '#f59e0b' },
+              {
+                label: "Paris 1.5°C target",
+                value: PARIS_TARGET_MONTHLY_KG,
+                color: "#6366f1",
+              },
+              {
+                label: "Global average",
+                value: GLOBAL_AVERAGE_MONTHLY_KG,
+                color: "#f59e0b",
+              },
             ].map(({ label, value, color }) => {
               const diff = totalMonthCo2e - value;
               return (
-                <div key={label} className="flex items-center justify-between text-sm">
+                <div
+                  key={label}
+                  className="flex items-center justify-between text-sm"
+                >
                   <span className="flex items-center gap-2 text-gray-600">
-                    <span className="w-3 h-3 rounded-full inline-block" style={{ backgroundColor: color }} aria-hidden="true" />
+                    <span
+                      className="w-3 h-3 rounded-full inline-block"
+                      style={{ backgroundColor: color }}
+                      aria-hidden="true"
+                    />
                     {label}
                   </span>
-                  <span className={diff <= 0 ? 'text-green-600 font-medium' : 'text-red-500 font-medium'}>
-                    {diff <= 0 ? `${Math.abs(diff).toFixed(1)} kg below ✅` : `${diff.toFixed(1)} kg above ⚠️`}
+                  <span
+                    className={
+                      diff <= 0
+                        ? "text-green-600 font-medium"
+                        : "text-red-500 font-medium"
+                    }
+                  >
+                    {diff <= 0
+                      ? `${Math.abs(diff).toFixed(1)} kg below ✅`
+                      : `${diff.toFixed(1)} kg above ⚠️`}
                   </span>
                 </div>
               );
@@ -191,17 +279,31 @@ export function Insights() {
               icon="📈"
               subtitle="CO₂e emissions over time"
             />
-            <div role="img" aria-label="Bar chart showing monthly CO₂e emissions">
+            <div
+              role="img"
+              aria-label="Bar chart showing monthly CO₂e emissions"
+            >
               <ResponsiveContainer width="100%" height={180}>
-                <BarChart data={monthlyData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+                <BarChart
+                  data={monthlyData}
+                  margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
+                >
                   <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                   <XAxis dataKey="month" tick={{ fontSize: 11 }} />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip
-                    formatter={(v) => [`${Number(v).toFixed(2)} kg CO₂e`, 'Emissions']}
+                    formatter={(v) => [
+                      `${Number(v).toFixed(2)} kg CO₂e`,
+                      "Emissions",
+                    ]}
                     contentStyle={{ borderRadius: 12, fontSize: 12 }}
                   />
-                  <Bar dataKey="total" fill="#16a34a" radius={[6, 6, 0, 0]} name="Monthly CO₂e" />
+                  <Bar
+                    dataKey="total"
+                    fill="#16a34a"
+                    radius={[6, 6, 0, 0]}
+                    name="Monthly CO₂e"
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -219,7 +321,10 @@ export function Insights() {
               icon="🏷️"
               subtitle="This month's breakdown"
             />
-            <div role="img" aria-label="Pie chart showing emissions broken down by category">
+            <div
+              role="img"
+              aria-label="Pie chart showing emissions broken down by category"
+            >
               <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
                   <Pie
@@ -250,9 +355,18 @@ export function Insights() {
             {/* Legend list */}
             <ul className="grid grid-cols-2 gap-2 mt-2" role="list">
               {pieData.map((d) => (
-                <li key={d.name} className="flex items-center gap-2 text-sm text-gray-600">
-                  <span className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: d.fill }} aria-hidden="true" />
-                  <span>{d.name}: <strong>{d.value} kg</strong></span>
+                <li
+                  key={d.name}
+                  className="flex items-center gap-2 text-sm text-gray-600"
+                >
+                  <span
+                    className="w-3 h-3 rounded-full shrink-0"
+                    style={{ backgroundColor: d.fill }}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    {d.name}: <strong>{d.value} kg</strong>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -272,16 +386,24 @@ export function Insights() {
             />
             <ul className="space-y-3" role="list">
               {topActivities.map((act, i) => (
-                <li key={act.label} className="flex items-center justify-between">
+                <li
+                  key={act.label}
+                  className="flex items-center justify-between"
+                >
                   <div className="flex items-center gap-3">
-                    <span className="text-lg font-bold text-gray-300 w-5" aria-hidden="true">
+                    <span
+                      className="text-lg font-bold text-gray-300 w-5"
+                      aria-hidden="true"
+                    >
                       {i + 1}
                     </span>
                     <div>
                       <p className="text-sm font-medium text-gray-800 capitalize">
-                        {act.label.replace(/_/g, ' ')}
+                        {act.label.replace(/_/g, " ")}
                       </p>
-                      <p className="text-xs text-gray-500">{CATEGORY_LABELS[act.category]}</p>
+                      <p className="text-xs text-gray-500">
+                        {CATEGORY_LABELS[act.category]}
+                      </p>
                     </div>
                   </div>
                   <span className="text-sm font-semibold text-gray-700">
@@ -297,9 +419,13 @@ export function Insights() {
       {/* ── Empty state ─── */}
       {logs.length === 0 && (
         <div className="text-center py-12 text-gray-400">
-          <div className="text-5xl mb-3" aria-hidden="true">📊</div>
+          <div className="text-5xl mb-3" aria-hidden="true">
+            📊
+          </div>
           <p className="font-medium text-gray-600">No data yet</p>
-          <p className="text-sm mt-1">Log activities to see your insights here.</p>
+          <p className="text-sm mt-1">
+            Log activities to see your insights here.
+          </p>
         </div>
       )}
     </div>
