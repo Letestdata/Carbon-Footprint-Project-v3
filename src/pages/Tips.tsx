@@ -76,7 +76,7 @@ export function Tips() {
   }
 
   return (
-    <main id="main-content" className="space-y-6 pb-24 md:pb-6" aria-label="Eco Tips">
+    <div className="space-y-6">
       <div>
         <h1 className="text-xl font-bold text-gray-900">Eco Tips</h1>
         <p className="text-sm text-gray-500 mt-1">
@@ -241,6 +241,6 @@ export function Tips() {
           </div>
         )}
       </section>
-    </main>
+    </div>
   );
 }

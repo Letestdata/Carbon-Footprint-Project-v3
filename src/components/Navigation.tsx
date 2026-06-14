@@ -30,7 +30,7 @@ export function Navigation() {
     <>
       {/* ── Desktop sidebar ─────────────────────────────── */}
       <nav
-        aria-label="Main navigation"
+        aria-label="Desktop navigation"
         className="hidden md:flex flex-col w-64 min-h-screen bg-white border-r border-gray-100 shadow-sm p-6 gap-2 fixed left-0 top-0 z-40"
       >
         {/* Logo */}
@@ -80,7 +80,7 @@ export function Navigation() {
 
       {/* ── Mobile bottom bar ───────────────────────────── */}
       <nav
-        aria-label="Main navigation"
+        aria-label="Mobile navigation"
         className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 shadow-lg"
       >
         <ul className="flex items-center justify-around px-2 py-1" role="list">

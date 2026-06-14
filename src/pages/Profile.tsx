@@ -80,7 +80,7 @@ export function Profile() {
   })();
 
   return (
-    <main id="main-content" className="space-y-6 pb-24 md:pb-6" aria-label="Profile">
+    <div className="space-y-6">
       <h1 className="text-xl font-bold text-gray-900">Profile</h1>
 
       {/* ── Save confirmation ─── */}
@@ -318,6 +318,6 @@ export function Profile() {
           </div>
         </Card>
       </section>
-    </main>
+    </div>
   );
 }

@@ -51,11 +51,11 @@ function AppLayout() {
       <Navigation />
 
       {/* Desktop: offset for sidebar; Mobile: full width */}
-      <div className="md:ml-64">
-        <div className="max-w-3xl mx-auto px-4 pt-6 md:pt-8">
+      <main id="main-content" tabIndex={-1} className="md:ml-64 focus:outline-none">
+        <div className="max-w-3xl mx-auto px-4 pt-6 md:pt-8 pb-24 md:pb-8">
           <PageRouter />
         </div>
-      </div>
+      </main>
     </div>
   );
 }

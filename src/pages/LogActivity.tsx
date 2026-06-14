@@ -153,7 +153,7 @@ export function LogActivity() {
   }
 
   return (
-    <main id="main-content" className="space-y-6 pb-24 md:pb-6" aria-label="Log Activity">
+    <div className="space-y-6">
       <h1 className="text-xl font-bold text-gray-900">Log Activity</h1>
 
       {/* ── Success toast ─── */}
@@ -347,6 +347,6 @@ export function LogActivity() {
           )}
         </Card>
       </section>
-    </main>
+    </div>
   );
 }

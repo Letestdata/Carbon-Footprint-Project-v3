@@ -90,11 +90,7 @@ export function Dashboard() {
   ).slice(0, 3);
 
   return (
-    <main
-      id="main-content"
-      className="space-y-6 pb-24 md:pb-6"
-      aria-label="Dashboard"
-    >
+    <div className="space-y-6">
       {/* ── Welcome header ─── */}
       <section aria-labelledby="welcome-heading">
         <div className="bg-gradient-to-r from-green-600 to-emerald-500 rounded-2xl p-6 text-white">
@@ -340,6 +336,6 @@ export function Dashboard() {
           </Button>
         </div>
       )}
-    </main>
+    </div>
   );
 }

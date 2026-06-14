@@ -109,7 +109,7 @@ export function Insights() {
       : `${Math.abs(vsGlobalSaving).toFixed(1)} kg above global average ⚠️`;
 
   return (
-    <main id="main-content" className="space-y-6 pb-24 md:pb-6" aria-label="Insights">
+    <div className="space-y-6">
       <h1 className="text-xl font-bold text-gray-900">Insights</h1>
 
       {/* ── Summary stats ─── */}
@@ -302,6 +302,6 @@ export function Insights() {
           <p className="text-sm mt-1">Log activities to see your insights here.</p>
         </div>
       )}
-    </main>
+    </div>
   );
 }

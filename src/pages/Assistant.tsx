@@ -151,11 +151,7 @@ export function Assistant() {
   }
 
   return (
-    <main
-      id="main-content"
-      className="flex flex-col h-[calc(100vh-5rem)] md:h-[calc(100vh-2rem)] pb-20 md:pb-0"
-      aria-label="AI Assistant – EcoBot"
-    >
+    <div className="flex flex-col h-[calc(100vh-5rem)] md:h-[calc(100vh-2rem)] pb-20 md:pb-0">
       {/* ── Header ─── */}
       <div className="flex items-center justify-between mb-4 shrink-0">
         <div className="flex items-center gap-3">
@@ -320,6 +316,6 @@ export function Assistant() {
           Type your message and press Enter or click the send button.
         </p>
       </div>
-    </main>
+    </div>
   );
 }
