@@ -2,7 +2,7 @@
 // EcoTrack – Insights Page
 // ============================================================
 
-import { useMemo } from "react";
+import { useMemo, useState, useId } from "react";
 import {
   BarChart,
   Bar,
@@ -40,6 +40,8 @@ export function Insights() {
   const { state, totalMonthCo2e, categoryBreakdown, theme } = useApp();
   const { logs } = state;
   const isDark = theme === "dark";
+  const [offsetPct, setOffsetPct] = useState(100);
+  const offsetSliderId = useId();
 
   // Monthly totals (last 6 months)
   const monthlyData = useMemo(() => {
@@ -431,6 +433,78 @@ export function Insights() {
                 </li>
               ))}
             </ul>
+          </Card>
+        </section>
+      )}
+
+      {/* ── Tree Offset Simulator ─── */}
+      {logs.length > 0 && (
+        <section aria-labelledby="offset-simulator-heading">
+          <Card>
+            <CardHeader
+              titleId="offset-simulator-heading"
+              title="Interactive Tree Offset Simulator"
+              icon="🌳"
+              subtitle="Calculate how many mature trees are needed to offset your monthly emissions"
+            />
+            <div className="space-y-4">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <label
+                  htmlFor={offsetSliderId}
+                  className="text-sm font-semibold text-green-600 dark:text-emerald-500"
+                >
+                  Offset Target: {offsetPct}%
+                </label>
+                <span className="text-xs font-semibold text-green-700 dark:text-green-400 bg-green-50 dark:bg-green-950/20 px-2.5 py-1 rounded-full">
+                  Target offset: {(totalMonthCo2e * (offsetPct / 100)).toFixed(1)} kg CO₂e
+                </span>
+              </div>
+
+              <input
+                id={offsetSliderId}
+                type="range"
+                min="0"
+                max="100"
+                value={offsetPct}
+                onChange={(e) => setOffsetPct(Number(e.target.value))}
+                className="w-full h-2 bg-gray-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-green-600 dark:accent-emerald-500"
+              />
+
+              <div className="bg-gray-50 dark:bg-slate-900/60 dark:border dark:border-slate-800/80 rounded-xl p-4 flex items-start gap-3">
+                <span className="text-2xl mt-0.5" aria-hidden="true">
+                  🌲
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-gray-800 dark:text-slate-200">
+                    Trees Needed: {Math.ceil((totalMonthCo2e * (offsetPct / 100)) / 1.833)} mature tree(s)
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+                    Based on 1 mature tree absorbing 22 kg CO₂/year (~1.83 kg/month).
+                  </p>
+                  
+                  {/* Visual tree representation */}
+                  {Math.ceil((totalMonthCo2e * (offsetPct / 100)) / 1.833) > 0 ? (
+                    <div
+                      className="flex flex-wrap gap-1 mt-3 text-xl"
+                      aria-label={`${Math.ceil((totalMonthCo2e * (offsetPct / 100)) / 1.833)} trees representation`}
+                    >
+                      {Array.from({ length: Math.min(Math.ceil((totalMonthCo2e * (offsetPct / 100)) / 1.833), 15) }).map((_, idx) => (
+                        <span key={idx} role="img" aria-label="tree">🌳</span>
+                      ))}
+                      {Math.ceil((totalMonthCo2e * (offsetPct / 100)) / 1.833) > 15 && (
+                        <span className="text-xs font-semibold text-gray-400 dark:text-slate-500 self-end ml-1">
+                          +{Math.ceil((totalMonthCo2e * (offsetPct / 100)) / 1.833) - 15} more
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-green-600 dark:text-green-400 font-medium mt-3">
+                      Slide the offset target above to start simulating trees! 🌟
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
           </Card>
         </section>
       )}

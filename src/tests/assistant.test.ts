@@ -292,4 +292,10 @@ describe("assistant.ts NLP service", () => {
     const res = generateAssistantResponse("random text query", [], profile, []);
     expect(res.content).toContain("didn't quite catch that");
   });
+
+  it("handles tree_offset intent", () => {
+    const res = generateAssistantResponse("how do I offset my carbon with trees", [], profile, []);
+    expect(res.content).toContain("Carbon Offsetting via Trees");
+    expect(res.content).toContain("mature tree");
+  });
 });

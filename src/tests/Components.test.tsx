@@ -518,6 +518,22 @@ describe("Pages and Main Routing Flow", () => {
       expect(screen.getByText(/above global average/i)).toBeTruthy();
       useAppSpy.mockRestore();
     });
+
+    it("allows simulating tree offsets via slider", () => {
+      localStorage.setItem("ecotrack_state_v2", JSON.stringify(mockState));
+      render(
+        <AppProvider>
+          <Insights />
+        </AppProvider>,
+      );
+      expect(screen.getByText("Interactive Tree Offset Simulator")).toBeTruthy();
+      const slider = screen.getByLabelText(/Offset Target/i);
+      expect(slider).toBeTruthy();
+      fireEvent.change(slider, { target: { value: "50" } });
+      expect(screen.getByText("Offset Target: 50%")).toBeTruthy();
+      fireEvent.change(slider, { target: { value: "0" } });
+      expect(screen.getByText(/Slide the offset target/i)).toBeTruthy();
+    });
   });
 
   describe("Tips Page details", () => {

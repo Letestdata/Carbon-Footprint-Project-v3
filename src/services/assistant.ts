@@ -44,12 +44,17 @@ type Intent =
   | "what_is_co2"
   | "reduce_footprint"
   | "category_breakdown"
+  | "tree_offset"
   | "unknown";
 
 const INTENT_PATTERNS: Array<{ pattern: RegExp; intent: Intent }> = [
   { pattern: /\b(hi|hello|hey|greetings|howdy)\b/i, intent: "greeting" },
   { pattern: /how are you|how do you do/i, intent: "how_are_you" },
   { pattern: /\bhelp\b|what can you do|options|commands/i, intent: "help" },
+  {
+    pattern: /offset|tree|plant|forest|nature|absorption/i,
+    intent: "tree_offset",
+  },
   {
     pattern: /my (carbon|footprint|co2|emission|impact)/i,
     intent: "carbon_overview",
@@ -84,7 +89,7 @@ const INTENT_PATTERNS: Array<{ pattern: RegExp; intent: Intent }> = [
     intent: "what_is_co2",
   },
   {
-    pattern: /reduce|lower|cut|decrease|improve|offset/i,
+    pattern: /reduce|lower|cut|decrease|improve/i,
     intent: "reduce_footprint",
   },
   {
@@ -361,6 +366,14 @@ export function generateAssistantResponse(
                 })
                 .join("\n")
           : `You haven't logged any activities yet this month. Use the **Log** page to get started!`,
+      );
+
+    case "tree_offset":
+      return buildAssistantMessage(
+        `🌳 **Carbon Offsetting via Trees:**\n\n` +
+          `A mature tree absorbs roughly **22 kg of CO₂ per year** (~1.83 kg/month). ` +
+          `To offset your current monthly footprint of **${monthTotal.toFixed(1)} kg CO₂e**, you would need to support the growth of **${Math.ceil(monthTotal / 1.833)}** mature tree(s).\n\n` +
+          `You can play with the Offset Simulator on the **Insights** page to plan your sustainability targets!`,
       );
 
     default:
