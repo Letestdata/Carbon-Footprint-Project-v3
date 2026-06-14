@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 🌍 EcoTrack – Smart Carbon Footprint Tracker
 
 > **Challenge Vertical:** Carbon Footprint Tracker  
@@ -110,8 +111,8 @@ The EcoBot assistant uses pattern-matching NLP:
 
 ```bash
 # Clone the repository
-git https://github.com/lovlyuser/Carbon-project-v3.git
-cd Carbon-project-v3
+git https://github.com/Letestdata/Carbon-Footprint-Project-v3.git
+cd Carbon-Footprint-Project-v3
 
 # Install dependencies
 npm install
@@ -254,3 +255,6 @@ MIT License © 2024 EcoTrack. Built with 💚 for a sustainable future.
 =======
 # Carbon-project
 >>>>>>> 719fac852d5f8b9f8e2ae902f970bdcdc8771ed4
+=======
+# Carbon-project-v3
+>>>>>>> 1c73ede331aa26289cde9c741d446683bda07527
