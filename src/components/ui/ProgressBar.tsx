@@ -27,13 +27,13 @@ export function ProgressBar({
   return (
     <div className={cn("w-full", className)}>
       {(label || showLabel) && (
-        <div className="flex justify-between text-xs text-gray-500 mb-1">
+        <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
           {label && <span>{label}</span>}
           {showLabel && <span>{pct.toFixed(0)}%</span>}
         </div>
       )}
       <div
-        className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden"
+        className="w-full bg-gray-100 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden"
         role="progressbar"
         aria-valuenow={clamped}
         aria-valuemin={0}

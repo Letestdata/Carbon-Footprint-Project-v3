@@ -9,6 +9,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  useState,
 } from "react";
 import type {
   ActivityEntry,
@@ -152,6 +153,8 @@ interface AppContextValue {
   totalMonthCo2e: number;
   todayCo2e: number;
   categoryBreakdown: Record<Category, number>;
+  theme?: "light" | "dark";
+  toggleTheme?: () => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -162,6 +165,33 @@ const STORAGE_KEY = "ecotrack_state_v2";
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    try {
+      const saved = localStorage.getItem("ecotrack_theme");
+      return (saved as "light" | "dark") || "light";
+    } catch {
+      return "light";
+    }
+  });
+
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => {
+      const next = prev === "light" ? "dark" : "light";
+      try {
+        localStorage.setItem("ecotrack_theme", next);
+      } catch {}
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   // Load persisted state on mount
   useEffect(() => {
@@ -264,6 +294,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       totalMonthCo2e,
       todayCo2e,
       categoryBreakdown,
+      theme,
+      toggleTheme,
     }),
     [
       state,
@@ -276,6 +308,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       totalMonthCo2e,
       todayCo2e,
       categoryBreakdown,
+      theme,
+      toggleTheme,
     ],
   );
 

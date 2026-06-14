@@ -1,19 +1,20 @@
-/* ============================================================
-   EcoTrack – Global Styles
-   ============================================================ */
-
 @import "tailwindcss";
+
+/* Enable class-based dark mode in Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
 
 /* ── Custom font ──────────────────────────────────────────── */
 
 body {
   font-family:
+    "Outfit",
     "Inter",
     system-ui,
     -apple-system,
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ── Focus ring improvement ───────────────────────────────── */

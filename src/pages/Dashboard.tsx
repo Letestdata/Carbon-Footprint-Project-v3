@@ -37,17 +37,19 @@ interface StatCardProps {
 }
 
 function StatCard({ label, value, sub, icon, color, bgColor }: StatCardProps) {
+  const darkBg = bgColor.replace("bg-", "dark:bg-").replace("-50", "-950/20").replace("green-950/20", "emerald-950/20");
+  const darkColor = color.replace("bg-", "dark:bg-").replace("-100", "-900/40");
   return (
-    <div className={`rounded-2xl p-5 ${bgColor} flex items-start gap-4`}>
+    <div className={`rounded-2xl p-5 ${bgColor} ${darkBg} flex items-start gap-4 transition-colors duration-300`}>
       <div
-        className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${color} shrink-0`}
+        className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl ${color} ${darkColor} shrink-0`}
       >
         {icon}
       </div>
       <div className="min-w-0">
-        <p className="text-sm text-gray-600 font-medium truncate">{label}</p>
-        <p className="text-2xl font-bold text-gray-900 mt-0.5">{value}</p>
-        {sub && <p className="text-xs text-gray-500 mt-0.5">{sub}</p>}
+        <p className="text-sm text-gray-600 dark:text-gray-400 font-medium truncate">{label}</p>
+        <p className="text-2xl font-bold text-gray-900 dark:text-white mt-0.5">{value}</p>
+        {sub && <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{sub}</p>}
       </div>
     </div>
   );
@@ -277,13 +279,13 @@ export function Dashboard() {
               {topCategories.map(([cat, val]) => (
                 <li key={cat}>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-gray-700">
+                    <span className="font-medium text-gray-700 dark:text-gray-300">
                       {CATEGORY_LABELS[cat]}
                     </span>
-                    <span className="text-gray-500">{val.toFixed(1)} kg</span>
+                    <span className="text-gray-500 dark:text-gray-400">{val.toFixed(1)} kg</span>
                   </div>
                   <div
-                    className="h-2 rounded-full bg-gray-100 overflow-hidden"
+                    className="h-2 rounded-full bg-gray-100 dark:bg-slate-800 overflow-hidden"
                     role="progressbar"
                     aria-valuenow={val}
                     aria-valuemin={0}
@@ -359,16 +361,16 @@ export function Dashboard() {
               {recentAchievements.map((a) => (
                 <li
                   key={a.id}
-                  className="flex items-center gap-2 bg-amber-50 rounded-xl px-3 py-2"
+                  className="flex items-center gap-2 bg-amber-50 dark:bg-amber-950/20 rounded-xl px-3 py-2"
                 >
                   <span className="text-2xl" aria-hidden="true">
                     {a.icon}
                   </span>
                   <div>
-                    <p className="text-sm font-semibold text-gray-800">
+                    <p className="text-sm font-semibold text-gray-800 dark:text-gray-200">
                       {a.title}
                     </p>
-                    <p className="text-xs text-gray-500">{a.description}</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400">{a.description}</p>
                   </div>
                 </li>
               ))}
@@ -383,10 +385,10 @@ export function Dashboard() {
           <div className="text-5xl mb-4" aria-hidden="true">
             🌱
           </div>
-          <h2 className="text-lg font-semibold text-gray-800">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
             Start Your Eco Journey
           </h2>
-          <p className="text-gray-500 text-sm mt-1 max-w-xs mx-auto">
+          <p className="text-gray-500 dark:text-gray-400 text-sm mt-1 max-w-xs mx-auto">
             Log your first activity to see your personal carbon footprint and
             get tailored insights.
           </p>

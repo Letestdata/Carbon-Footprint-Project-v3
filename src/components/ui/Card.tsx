@@ -17,7 +17,7 @@ export function Card({ children, className, ...rest }: CardProps) {
   return (
     <div
       className={cn(
-        "bg-white rounded-2xl shadow-sm border border-gray-100 p-5",
+        "bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800/80 p-5 transition-all duration-300",
         className,
       )}
       {...rest}
@@ -44,12 +44,12 @@ export function CardHeader({
     <div className="mb-4">
       <h2
         id={titleId}
-        className="text-base font-semibold text-gray-800 flex items-center gap-2"
+        className="text-base font-semibold text-gray-800 dark:text-white flex items-center gap-2"
       >
         {icon && <span aria-hidden="true">{icon}</span>}
         {title}
       </h2>
-      {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{subtitle}</p>}
     </div>
   );
 }
