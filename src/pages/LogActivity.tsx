@@ -251,6 +251,7 @@ export function LogActivity() {
                 placeholder={`Enter ${selectedFactorData?.unit ?? 'amount'}`}
                 required
                 aria-required="true"
+                aria-describedby={error ? `${factorId}-error` : undefined}
                 className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>
@@ -268,6 +269,7 @@ export function LogActivity() {
                 onChange={(e) => setDate(e.target.value)}
                 required
                 aria-required="true"
+                aria-describedby={error ? `${factorId}-error` : undefined}
                 className="w-full px-3 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
             </div>

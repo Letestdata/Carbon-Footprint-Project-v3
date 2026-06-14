@@ -64,7 +64,7 @@ export const ACHIEVEMENTS: Achievement[] = [
     icon: '🚲',
     condition: (logs) => {
       const zeroDays = logs.filter(
-        (l) => l.entries.every((e) => e.category !== 'transport' || e.co2e === 0)
+        (l) => l.entries.length > 0 && l.entries.every((e) => e.category !== 'transport' || e.co2e === 0)
       );
       return zeroDays.length >= 3;
     },

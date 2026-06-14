@@ -119,7 +119,8 @@ export function Tips() {
       )}
 
       {/* ── Filters ─── */}
-      <section aria-label="Filter tips">
+      <section aria-labelledby="filter-heading">
+        <h2 id="filter-heading" className="sr-only">Filter Tips</h2>
         <div className="space-y-3">
           {/* Category filter */}
           <div>
@@ -173,7 +174,8 @@ export function Tips() {
       </p>
 
       {/* ── Tips grid ─── */}
-      <section aria-label="Eco tips list">
+      <section aria-labelledby="tips-list-heading">
+        <h2 id="tips-list-heading" className="sr-only">Available Tips</h2>
         <ul className="space-y-4" role="list">
           {filteredTips.map((tip) => {
             const isSaved = savedTips.has(tip.id);

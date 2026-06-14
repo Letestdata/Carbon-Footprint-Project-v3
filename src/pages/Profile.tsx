@@ -196,7 +196,7 @@ export function Profile() {
               </div>
             </form>
           ) : (
-            <dl className="space-y-3">
+            <ul className="space-y-3" role="list">
               {[
                 { label: 'Name', value: profile.name, icon: '👤' },
                 { label: 'Location', value: profile.location || '—', icon: '📍' },
@@ -204,15 +204,15 @@ export function Profile() {
                 { label: 'Monthly Goal', value: `${profile.monthlyBudgetGoal} kg CO₂e`, icon: '🎯' },
                 { label: 'Member Since', value: new Date(profile.joinedAt).toLocaleDateString('en', { year: 'numeric', month: 'long' }), icon: '📅' },
               ].map(({ label, value, icon }) => (
-                <div key={label} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
+                <li key={label} className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0">
                   <span className="text-lg w-7" aria-hidden="true">{icon}</span>
                   <div>
-                    <dt className="text-xs text-gray-500">{label}</dt>
-                    <dd className="text-sm font-medium text-gray-800">{value}</dd>
+                    <p className="text-xs text-gray-500 font-medium">{label}</p>
+                    <p className="text-sm font-medium text-gray-800">{value}</p>
                   </div>
-                </div>
+                </li>
               ))}
-            </dl>
+            </ul>
           )}
         </Card>
       </section>

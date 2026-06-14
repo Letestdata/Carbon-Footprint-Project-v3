@@ -55,9 +55,8 @@ function MessageBubble({ msg }: MessageBubbleProps) {
   });
 
   return (
-    <div
+    <li
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} gap-2`}
-      role="listitem"
     >
       {/* Avatar */}
       {!isUser && (
@@ -91,7 +90,7 @@ function MessageBubble({ msg }: MessageBubbleProps) {
           👤
         </div>
       )}
-    </div>
+    </li>
   );
 }
 
