@@ -33,6 +33,7 @@ export function Profile() {
   const locationId = useId();
   const householdId = useId();
   const goalId = useId();
+  const errorId = useId();
 
   function handleSave(e: React.FormEvent) {
     e.preventDefault();
@@ -149,6 +150,7 @@ export function Profile() {
                   onChange={(e) => setName(e.target.value)}
                   required
                   aria-required="true"
+                  aria-describedby={formError ? errorId : undefined}
                   maxLength={60}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
@@ -168,6 +170,7 @@ export function Profile() {
                   onChange={(e) => setLocation(e.target.value)}
                   maxLength={80}
                   placeholder="e.g. London, UK"
+                  aria-describedby={formError ? errorId : undefined}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
@@ -191,6 +194,7 @@ export function Profile() {
                   onChange={(e) => setHouseholdSize(e.target.value)}
                   required
                   aria-required="true"
+                  aria-describedby={formError ? errorId : undefined}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
@@ -214,6 +218,7 @@ export function Profile() {
                   onChange={(e) => setMonthlyGoal(e.target.value)}
                   required
                   aria-required="true"
+                  aria-describedby={formError ? errorId : undefined}
                   className="w-full px-3 py-2.5 rounded-xl border border-gray-200 dark:border-slate-800 text-sm bg-white dark:bg-slate-900 text-gray-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
@@ -222,7 +227,7 @@ export function Profile() {
               </div>
 
               {formError && (
-                <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+                <p id={errorId} role="alert" className="text-sm text-red-600 dark:text-red-400">
                   {formError}
                 </p>
               )}

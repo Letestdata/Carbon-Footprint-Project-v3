@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 # 🌍 EcoTrack – Smart Carbon Footprint Tracker
 
 > **Challenge Vertical:** Carbon Footprint Tracker  
