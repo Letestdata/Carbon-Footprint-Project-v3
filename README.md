@@ -249,4 +249,4 @@ If adopted at scale, EcoTrack could help users:
 
 ## 📄 License
 
-MIT License © 2024 EcoTrack. Built with 💚 for a sustainable future.
+MIT License © 2026 EcoTrack. Built with 💚 for a sustainable future.

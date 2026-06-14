@@ -137,7 +137,7 @@ export function Navigation() {
         {/* Footer */}
         <div className="pt-4 border-t border-gray-100 dark:border-slate-800">
           <p className="text-xs text-gray-400 text-center">
-            © 2024 EcoTrack · Built for sustainability
+            © 2026 EcoTrack · Built for sustainability
           </p>
         </div>
       </nav>
